@@ -17,6 +17,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user
 from models import User
 from werkzeug.security import check_password_hash
 from models import db, User  # Import after db is defined in models.py
+
 # Initialize Flask
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -61,7 +62,6 @@ async def query_deepseek(prompt):
         return f"Error: {str(e)}"
 
 # Routes
-# @app.route("/")
 @app.route("/")
 @limiter.limit("10 per minute")
 def home():
@@ -106,10 +106,14 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-# Error Handlers
+# Handle 404 errors
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("errors/404.html"), 404
+# Handle 505 errors
+@app.errorhandler(505)
+def http_version_not_supported(e):
+    return render_template("errors/505.html"), 505
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
