@@ -21,7 +21,7 @@
                     {% endwith %}
 
                     <!-- Login Form -->
-                    <form method="POST" action="{{ url_for('login') }}">
+                    <form method="POST" action="{{ url_for('auth.login') }}">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="{{ url_for('register') }}" class="btn btn-link">Need an account? Register</a>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-link">Need an account? Register</a>
                         </div>
                     </form>
                 </div>

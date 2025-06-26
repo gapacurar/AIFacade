@@ -1,0 +1,35 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>AI Web Interface</h1>
+     <a href="{{url_for('auth.logout')}}">Log Out</a>
+    <form method="POST" action="{{ url_for('chat.chat') }}">
+        <textarea class="form-control" name="prompt" required></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Send</button>
+    </form>
+    
+   <form action="{{ url_for('chat.clear_chat') }}" method="POST" class="mb-3">
+    <button type="submit" class="btn btn-danger">Clear Chat History</button>
+</form>
+
+<!-- Display conversation -->
+<div id="chat-container">
+  {% for prompt, response in conversation %}
+    <div class="card mb-2">
+      <div class="card-header bg-primary text-white">You</div>
+      <div class="card-body">
+        <p class="card-text">{{ prompt }}</p>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white">Assistant</div>
+      <div class="card-body">
+        <div class="card-text">{{ response|safe }}</div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

@@ -8,3 +8,4 @@ class Config:
     DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
     SQLALCHEMY_DATABASE_URI = "sqlite:///users.db"  # For Flask-Login
     RATELIMIT_DEFAULT = "5 per minute"              # Rate limiting
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
