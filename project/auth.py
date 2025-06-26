@@ -10,7 +10,7 @@ bp = Blueprint('auth', __name__)
 # Add this user_loader function:
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 @bp.route("/register", methods=['GET', 'POST'])
@@ -28,7 +28,7 @@ def register():
         
         # Register user
         new_user = User(username=username)
-        new_user.set_password(password)
+        new_user.password = password
         db.session.add(new_user)
         db.session.commit()
         
@@ -44,7 +44,7 @@ def register():
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect(url_for("chat.home"))
 
     if request.method == "POST":
         username = request.form.get("username")

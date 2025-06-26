@@ -1,11 +1,20 @@
 <!-- templates/index.html -->
 {% extends "base.html" %}
 {% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} mb-3">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
 <div class="container">
     <h1>AI Web Interface</h1>
      <a href="{{url_for('auth.logout')}}">Log Out</a>
     <form method="POST" action="{{ url_for('chat.chat') }}">
-        <textarea class="form-control" name="prompt" required></textarea>
+        <textarea class="form-control" name="prompt"></textarea>
         <button type="submit" class="btn btn-primary mt-2">Send</button>
     </form>
     

@@ -85,14 +85,11 @@ Now all the routes __/logout__, __/login__, __/register__ aswell as the __login_
 ### Chats - chat.py, utils.py
 All the chats related routes __/chat__, the *new* __**/clear**__ route logic and __/home__ are located in __chat.py__ while the function __query_deepseek__ has been moved to __utils.py__
 
-### Errors - errors.py
-All the errorhandlers (404, 500) have been moved to __errors.py__.
-
 ### extensions.py
 In here we only have the __limiter__ object.
 
 ### App creation and all the linking logic behind - __init__.py
-All the logic regarding creating the app, connecting the blueprints to the app, connecting the database, limiter, login manager is happening in **__init__.py**
+All the logic regarding creating the app, connecting the blueprints to the app, connecting the database, limiter, login manager is happening in **__init__.py**. Erros are also there because we need to add them as global in app directly. 
 
 ### .env file
 Moved it to root dir and updated .gitignore to properly hide it.

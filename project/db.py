@@ -15,6 +15,7 @@ def init_app(app):
         with app.app_context():
             upgrade()
             print("Database initialized via migration.")
+            
     @app.cli.command("reset-db")
     def reset_db_command():
         """Drop and recreate all tables — dev use only!"""
