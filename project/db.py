@@ -1,9 +1,7 @@
-from flask_migrate import Migrate, upgrade, init
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, inspect, text
 import click
-from flask_migrate import migrate as do_migrate, stamp
-import os
 from flask.cli import with_appcontext
 
 db = SQLAlchemy()
