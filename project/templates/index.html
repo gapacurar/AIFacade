@@ -12,7 +12,8 @@
                     {% endwith %}
 <div class="container">
     <h1>AI Web Interface</h1>
-     <a href="{{url_for('auth.logout')}}">Log Out</a>
+    <a role="button" class="btn btn-outline-warning" href="{{url_for('auth.logout')}}">logout</a>
+
     <form method="POST" action="{{ url_for('chat.chat') }}">
         <textarea class="form-control" name="prompt"></textarea>
         <button type="submit" class="btn btn-primary mt-2">Send</button>

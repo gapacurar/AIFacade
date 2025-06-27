@@ -31,3 +31,4 @@ class Chat(db.Model):
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     prompt = db.Column(db.Text, nullable=False)
     response = db.Column(db.Text, nullable=False)
+    

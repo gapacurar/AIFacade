@@ -1,19 +1,3 @@
--- to run migrate you first have to set env variable FLASK_APP:
-    PowerShell(windows):
-        $env:FLASK_APP = "project:create_app"
--- After that we can use commands like
-flask db init
-flask db migrate
-flask db upgrade
-flask init-db
---- if it gets bugged you can delete the new migration folder entirely and redo these steps
---- And we start fresh after setting the env var again with:
-flask db init
-flask db migrate -m "initial"
-flask db upgrade
-flask init-db
-
-
 # Registration
 Added __@app.route('/register')__ logic and __register.html__ UI.
 # ASYNC

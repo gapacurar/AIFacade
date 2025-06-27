@@ -1,6 +1,4 @@
 from flask_login import current_user
-import pytest
-from project.models import User
 
 
 def test_register_user(client):
@@ -13,9 +11,10 @@ def test_register_user(client):
     # Send POST request to /register
     response = client.post("/register",
                            data = {'username': 'test', 'password': 'test'}, follow_redirects=True)
-
+    
     # Assert request succeeded
     assert response.status_code == 200  # Or 200 depending on your implementation
+
 
 def test_user_exists(client):
     """

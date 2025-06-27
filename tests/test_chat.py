@@ -1,6 +1,4 @@
 from flask_login import current_user
-from project.utils import query_deepseek
-from flask import flash
 
 def test_redirect_home(client):
     """
