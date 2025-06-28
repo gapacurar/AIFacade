@@ -62,3 +62,13 @@ def test_clear_chat(client, auth):
         assert b"API Error 402: Insufficient Balance" not in response.data
 
 
+def test_prompt_too_long(client, auth):
+    """
+    GIVEN a client already configured for testing and an authenticated user
+    WHEN trying to use a prompth with a lenght of 1000+ characters
+    CHECK if we get the correct error.
+    """
+    auth.login()
+    prompt = 'a' * 1001
+    response = client.post('/chat', data={"prompt": prompt}, follow_redirects = True)
+    assert b"Prompt too long." in response.data

@@ -32,6 +32,10 @@ def home():
 @limiter.limit("5 per minute")
 def chat():
     prompt = request.form["prompt"]
+
+    if len(prompt) > 1000:
+        flash("Prompt too long.", "error")
+        return redirect(url_for("chat.home"))
     
     if not prompt.strip():
         flash("Please enter a message", "error")
