@@ -50,7 +50,23 @@ def create_app(test_config = None):
     @app.route('/simulate-505')
     def simulate_505():
         abort(505)
-        
+    
+
+    @app.after_request
+    def set_security_headers(response):
+        if response is None:
+            return response  # avoid modifying a None response
+
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' https://cdn.jsdelivr.net; "
+            "style-src 'self' https://cdn.jsdelivr.net; "
+            "object-src 'none';"
+            )
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        return response
     
     return app
 
