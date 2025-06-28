@@ -3,8 +3,6 @@ from project.config import Config
 from .auth import login_manager
 from . import db
 from .extensions import limiter
-from flask.cli import with_appcontext
-from flask_migrate import upgrade
 from flask_wtf import CSRFProtect
 
 csrf = CSRFProtect()
@@ -35,8 +33,6 @@ def create_app(test_config = None):
     from .auth import bp as auth
     app.register_blueprint(chat)
     app.register_blueprint(auth)
-
-
 
     # Handle 404 errors
     @app.errorhandler(404)
