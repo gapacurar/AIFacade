@@ -23,7 +23,8 @@ def create_app(test_config = None):
 
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = "login"
+    # type: ignore is used to suppress type checker error for login_view assignment
+    login_manager.login_view = "login"  # type: ignore
     limiter.init_app(app)
     
     from .chat import bp as chat
