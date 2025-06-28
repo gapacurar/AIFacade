@@ -37,22 +37,29 @@ def chat():
         flash("Please enter a message", "error")
         return redirect(url_for("chat.home"))
 
-    # Get response from DeepSeek
-    answer = query_deepseek(prompt)
+    try:
+        # Get response from DeepSeek
+        answer = query_deepseek(prompt)
 
-    # Save to database
-    new_chat = Chat(
-        user_id = current_user.id,
-        prompt=prompt,
-        response = answer,
-    )
-    db.session.add(new_chat)
-    db.session.commit()
+        # Save to database
+    
+        new_chat = Chat(
+            user_id = current_user.id,
+            prompt=prompt,
+            response = answer,
+        )
+        db.session.add(new_chat)
+        db.session.commit()
+    
+    except Exception as e:
+        db.session.rollback()
+        flash("Something went wrong.", "error")
 
     return redirect(url_for("chat.home"))
 
 
 @bp.route("/clear", methods=['POST'])
+@limiter.limit("3 per minute")
 def clear_chat():
     # Delete all chats for current user
     Chat.query.filter_by(user_id=current_user.id).delete()

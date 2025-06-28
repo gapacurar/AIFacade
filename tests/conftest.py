@@ -12,7 +12,8 @@ def app():
 
     app = create_app({'TESTING': True, 
                       'SQLALCHEMY_DATABASE_URI': f'sqlite:///{db_path}', 
-                      'SQLALCHEMY_TRACK_MODIFICATIONS': False})
+                      'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+                      'WTF_CSRF_ENABLED': False})
 
     with app.app_context():
         db.create_all()  

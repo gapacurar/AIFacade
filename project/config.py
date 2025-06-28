@@ -10,3 +10,5 @@ class Config:
     RATELIMIT_DEFAULT = "5 per minute"              # Rate limiting
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     RATELIMIT_STORAGE_URI = "memory://"
+    WTF_CSRF_ENABLED = True
+    WTF_CSRF_TIME_LIMIT = None

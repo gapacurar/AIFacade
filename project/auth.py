@@ -27,14 +27,19 @@ def register():
             return redirect(url_for("auth.register"))
         
         # Register user
-        new_user = User(username=username)
-        new_user.password = password
-        db.session.add(new_user)
-        db.session.commit()
+        try:
+            new_user = User(username=username)
+            new_user.password = password
+            db.session.add(new_user)
+            db.session.commit()
         
-        # Automatically log in user
-        login_user(new_user)
-        flash("Account created successfully", "success")
+            # Automatically log in user
+            login_user(new_user)
+            flash("Account created successfully", "success")
+            
+        except Exception as e:
+            db.session.rollback()
+            flash("Something went wrong.", "error")
 
         return redirect(url_for('chat.home'))
     

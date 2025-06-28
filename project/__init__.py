@@ -5,7 +5,9 @@ from . import db
 from .extensions import limiter
 from flask.cli import with_appcontext
 from flask_migrate import upgrade
-import click
+from flask_wtf import CSRFProtect
+
+csrf = CSRFProtect()
 
 # Initialize APP & Extensions
 def create_app(test_config = None):
@@ -21,6 +23,7 @@ def create_app(test_config = None):
         app.config.update(test_config)
         app.config["RATELIMIT_DEFAULT"] = "20 per minute"
 
+    csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     # type: ignore is used to suppress type checker error for login_view assignment
