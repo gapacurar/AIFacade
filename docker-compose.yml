@@ -1,8 +1,7 @@
-
-
 services:
   web:
     build: .
+    container_name: flask_app
     ports:
       - "5000:5000"
     env_file:
@@ -13,3 +12,21 @@ services:
       - .:/app  # Hot reload and persistence in dev
       - ./instance:/app/instance # persist SQLite DB in dev
     restart: always
+  
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+  
+
+volumes:
+  caddy_data:
+  caddy_config:

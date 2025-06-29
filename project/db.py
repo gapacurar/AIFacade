@@ -29,7 +29,7 @@ def reset_db_command():
     db.session.commit()
     db.drop_all()
     db.create_all()
-    print("⚠️ Database dropped and re-created.")
+    print("Database dropped and re-created.")
     
 
 

@@ -21,7 +21,7 @@ RUN mkdir -p /app/instance
 # Copy the whole project (app and config)
 COPY . .
 
-# Expost port 5000
+# Expose port 5000
 EXPOSE 5000
 
 # Use environment variables for secrets
