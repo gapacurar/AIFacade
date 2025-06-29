@@ -1,4 +1,5 @@
 from flask_login import current_user
+from unittest.mock import patch
 
 def test_redirect_home(client):
     """
@@ -87,3 +88,33 @@ def test_prompt_too_long(client, auth):
     prompt = 'a' * 1001
     response = client.post('/chat', data={"prompt": prompt}, follow_redirects = True)
     assert b"Prompt too long." in response.data
+
+
+def test_chat_view_handles_exception(client, auth, app):
+    auth.login()  # Log in a user so current_user is valid
+
+    with patch("project.chat.query_deepseek", side_effect=Exception("test error")):
+        response = client.post("/chat", data={"prompt": "This will cause error"}, follow_redirects=True)
+
+        # Check if redirected to home
+        assert response.status_code == 200
+        assert b"Something went wrong." in response.data
+
+
+
+def test_query_deepseek_exception_handling(client, auth):
+    """
+    GIVEN a working Flask test client and an authenticated user,
+    WHEN the DeepSeek API raises an unexpected exception (e.g., connection error),
+    THEN the query_deepseek should handle it gracefully and return an error string.
+    """
+
+    auth.login()
+
+    # Patch 'requests.post' to raise a generic Exception
+    with patch("project.utils.requests.post", side_effect=Exception("Test exception")):
+        response = client.post("/chat", data={"prompt": "trigger error"}, follow_redirects=True)
+
+        assert response.status_code == 200
+        # Since the function returns "Error: <exception message>"
+        assert b"Error: Test exception" in response.data or b"Something went wrong." in response.data

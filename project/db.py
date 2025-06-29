@@ -16,14 +16,14 @@ def init_db():
 
 @click.command("delete-tables")
 @with_appcontext
-def delete_db():
+def delete_tables():
     """Deletes all the tables."""
     db.drop_all()
     print("All tables have been dropped.")
 
 @click.command("reset-tables")
 @with_appcontext
-def reset_db_command():
+def reset_tables_command():
     """Drop and recreate all tables — dev use only! Also deletes alembic_version if exists. """
     db.session.execute(text("DROP TABLE IF EXISTS alembic_version"))
     db.session.commit()
@@ -37,9 +37,9 @@ def reset_db_command():
 def init_app(app):
     db.init_app(app)
     migrate.init_app(app, db)
-    app.cli.add_command(reset_db_command)
+    app.cli.add_command(reset_tables_command)
     app.cli.add_command(init_db)
-    app.cli.add_command(delete_db)
+    app.cli.add_command(delete_tables)
 
 
 

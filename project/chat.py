@@ -16,7 +16,6 @@ bp = Blueprint('chat', __name__)
 
 # Routes
 @bp.route("/")
-@limiter.limit("10 per minute")
 def home():
     if not current_user.is_authenticated:
         return redirect(url_for("auth.login"))
@@ -29,7 +28,6 @@ def home():
 
 
 @bp.route("/chat", methods=["POST"])
-@limiter.limit("5 per minute")
 def chat():
     prompt = request.form["prompt"]
 
@@ -63,7 +61,6 @@ def chat():
 
 
 @bp.route("/clear", methods=['POST'])
-@limiter.limit("3 per minute")
 def clear_chat():
     # Delete all chats for current user
     Chat.query.filter_by(user_id=current_user.id).delete()
