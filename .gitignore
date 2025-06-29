@@ -15,5 +15,4 @@ build/
 structure.py
 .vscode
 
-
-migrations/
+.env
