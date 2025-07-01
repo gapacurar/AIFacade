@@ -1,3 +1,8 @@
+// This file defines the launch configuration for Visual Studio Code debugging.
+// It specifies how to launch and debug a web application using Chrome.
+// The configuration targets a local development server running at http://localhost:5000.
+// The "webRoot" property maps the workspace folder to the web server root for accurate source mapping.
+// For more details on launch configuration attributes, refer to the official VS Code documentation.
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
