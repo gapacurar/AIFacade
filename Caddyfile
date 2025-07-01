@@ -1,3 +1,4 @@
-
-localhost
-reverse_proxy web:5000
+localhost {
+    reverse_proxy web:5000
+    tls internal
+}
