@@ -1,9 +1,43 @@
-from flask import Flask, render_template, abort
+
+"""
+This module initializes and configures the Flask application for the project.
+Main Components:
+----------------
+- Imports necessary Flask modules and extensions.
+- Initializes CSRF protection, database, login manager, and rate limiter.
+- Defines a factory function `create_app` to create and configure the Flask app instance.
+Functions:
+----------
+create_app(test_config=None)
+    Factory function to create and configure the Flask application.
+    Parameters:
+    -----------
+    test_config : dict, optional
+        Configuration overrides for testing purposes. If provided, these settings
+        will override the default and file-based configurations.
+    Returns:
+    --------
+    app : Flask
+        The configured Flask application instance.
+    Functionality:
+    --------------
+    - Loads configuration from the Config class and optionally from a config file or test config.
+    - Initializes Flask extensions: CSRF protection, database, login manager, and rate limiter.
+    - Registers blueprints for modular structure (chat and auth).
+    - Sets up custom error handlers for 404 and 505 errors, rendering custom templates.
+    - Provides a route `/simulate-505` to trigger a 505 error for testing.
+    - Sets security-related HTTP headers after each request to enhance security.
+Notes:
+------
+- The login manager is configured for strong session protection and redirects unauthenticated users to the 'login' view.
+- Security headers include Content Security Policy, X-Content-Type-Options, X-Frame-Options, and Referrer-Policy.
+"""
 from project.config import Config
 from .auth import login_manager
 from . import db
 from .extensions import limiter
 from flask_wtf import CSRFProtect
+from flask import Flask, render_template, abort
 
 # Initialize CSRF protection extension
 csrf = CSRFProtect()
