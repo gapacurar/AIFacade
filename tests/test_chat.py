@@ -5,11 +5,12 @@ def test_redirect_home(client):
     """
     GIVEN a client already configured for testing
     WHEN we try to connect to index.html without being connected
-    CHECK if we get the error from flash
+    CHECK if we get redirected to the login page.
     """
     with client:
-        response = client.get('/', follow_redirects=False)
-        assert response.status_code == 302
+        response = client.get('/', follow_redirects=True)
+        assert response.status_code == 200
+        assert response.request.path == '/login'
 
 
 def test_prompt_no_message(client, auth):

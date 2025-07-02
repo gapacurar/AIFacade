@@ -53,6 +53,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 | (Browser)   |--------------->| (Flask)    |------------->|   Service   |
 +-------------+    HTTP        +------------+   REST JSON  +-------------+
 ```
+![Context Diagram](context_diagram.png)
 
 4.2 **Key Scenarios**
 
@@ -65,7 +66,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 
 5.1 **Class Diagram**
 
-
+![class_diagram](class_diagram.png)
 
 *Summary:*
 
@@ -76,7 +77,19 @@ Covers analysis of requirements, high-level and detailed design, component inter
 5.2 **Package/Module Structure**
 
 ```plaintext
+instance/
+├── users.db
 project/
+├── static/
+|      ├── style.css
+├── templates/
+|      ├── errors/
+|      |      ├── 404.html
+|      |      ├── 505.html
+|      ├── base.html
+|      ├── index.html
+|      ├── login.html
+|      ├── register.html
 ├── auth.py
 ├── chat.py
 ├── models.py
@@ -103,6 +116,7 @@ ChatService -> DB: save(User, prompt, response)
 ChatService -> ChatRoute: return(response)
 ChatRoute -> User: render chat page with updated history
 ```
+![Sequence Diagram](sequence_diagram_prompt_submission.png)
 
 6.2 **State Diagram: Chat Session**
 
@@ -122,6 +136,7 @@ ChatRoute -> User: render chat page with updated history
    |               |
    |-- logout() --> [Logged Out]
 ```
+![State Diagram](state_diagram_chat_session.png)
 
 ---
 
@@ -154,6 +169,7 @@ ChatRoute -> User: render chat page with updated history
 ```plaintext
 User (1) ──< Chat (many)
 ```
+![ER Diagram](er_diagram.png)
 
 8.2 **Schema Definition** (SQLAlchemy)
 

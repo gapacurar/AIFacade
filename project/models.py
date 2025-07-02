@@ -1,8 +1,30 @@
-# models.py
-from datetime import datetime, timezone
+"""
+Models for user authentication and chat history management.
+Classes:
+    User (UserMixin, db.Model):
+        Represents a user in the system.
+        Attributes:
+            id (int): Primary key, unique identifier for the user.
+            username (str): Unique username for the user, required.
+            password_hash (str): Hashed password for authentication, required.
+            chats (list of Chat): List of chat records associated with the user.
+        Properties:
+            password: Write-only property for setting the user's password.
+        Methods:
+            check_password(password): Verifies a plaintext password against the stored hash.
+    Chat (db.Model):
+        Represents a chat interaction between a user and the system.
+        Attributes:
+            id (int): Primary key, unique identifier for the chat record.
+            user_id (int): Foreign key referencing the associated user.
+            timestamp (datetime): UTC timestamp when the chat was created (defaults to current time).
+            prompt (str): The user's input or question.
+            response (str): The system's response to the prompt.
+"""
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime, timezone
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'

@@ -1,7 +1,34 @@
-# DeepSeek Chatbot Application
-# This application uses Flask, Flask-Login, and aiohttp to create a chatbot interface
-# that interacts with the DeepSeek API. It includes user authentication, rate limiting,
-# and a simple chat interface. The responses from DeepSeek are rendered in Markdown format.
+
+"""
+chat.py
+This module defines the chat blueprint for the Flask application, handling chat-related routes and logic.
+Blueprints:
+    bp: Flask Blueprint instance for chat-related routes.
+Routes:
+    - "/" (GET): Home page for the chat interface.
+        * Redirects to login if the user is not authenticated.
+        * Loads all chat messages for the current user from the database, ordered by timestamp.
+        * Renders the "index.html" template with the user's conversation history.
+    - "/chat" (POST): Handles submission of new chat prompts.
+        * Validates the prompt length and content.
+        * Calls the DeepSeek API to generate a response.
+        * Saves the prompt and response to the database, associated with the current user.
+        * Handles errors gracefully, rolling back the database session and flashing error messages as needed.
+        * Redirects back to the home page after processing.
+    - "/clear" (POST): Clears the chat history for the current user.
+        * Deletes all chat records for the current user from the database.
+        * Commits the transaction and flashes a success message.
+        * Redirects back to the home page.
+Dependencies:
+    - Flask: For routing, rendering templates, handling requests, and flashing messages.
+    - Flask-Login: For user authentication and access to the current user.
+    - SQLAlchemy: For database interactions.
+    - Custom modules: models (Chat model), extensions (limiter), utils (query_deepseek), db (database instance).
+Notes:
+    - All chat data is stored and retrieved per user, ensuring privacy and separation of conversations.
+    - Error handling is implemented for database operations and prompt validation.
+    - The DeepSeek API is used to generate responses to user prompts.
+"""
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user
