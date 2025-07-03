@@ -25,11 +25,11 @@ from flask import current_app
 def query_deepseek(prompt):
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {current_app.config['DEEPSEEK_API_KEY']}"
+        "Authorization": f"Bearer {current_app.config['DEEPSEEK_API_KEY']}" #.env api key
     }
     data = {
         "model": "deepseek-chat",
-        "messages": [{"role": "user", "content": prompt}]
+        "messages": [{"role": "user", "content": prompt}] # Sending the user's prompt as a message
     }
     try:
         response = requests.post(
@@ -40,7 +40,7 @@ def query_deepseek(prompt):
         )
         if response.status_code == 200:
             result = response.json()
-            return markdown(result["choices"][0]["message"]["content"])
+            return markdown(result["choices"][0]["message"]["content"]) 
         else:
             error_msg = response.json().get("error", {}).get("message", "Unknown error")
             return f"API Error {response.status_code}: {error_msg}"

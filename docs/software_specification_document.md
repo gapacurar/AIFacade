@@ -1,8 +1,8 @@
-**Software Specification Document (SSD) for DeepSeek Chat Application**
+# Software Specification Document (SSD) for DeepSeek Chat Application
 
 ---
 
-**1. Document Control**
+## 1. Document Control
 
 - **Version:** 1.2
 - **Date:** 2025-06-30
@@ -11,7 +11,7 @@
 
 ---
 
-**2. Introduction**
+## 2. Introduction
 
 2.1 **Purpose**
 
@@ -33,7 +33,7 @@ The system provides a secure, web-based chat interface where registered users ca
 
 ---
 
-**3. Overall Description**
+## 3. Overall Description
 
 3.1 **Product Perspective**
 
@@ -71,7 +71,7 @@ The system provides a secure, web-based chat interface where registered users ca
 
 ---
 
-**4. Functional Requirements**
+## 4 Functional Requirements
 
 4.1 **Authentication & Authorization**
 
@@ -94,7 +94,7 @@ The system provides a secure, web-based chat interface where registered users ca
 
 ---
 
-**5. Non-Functional Requirements**
+## 5 Non-Functional Requirements
 
 5.1 **Security**
 
@@ -127,7 +127,7 @@ The system provides a secure, web-based chat interface where registered users ca
 
 ---
 
-**6. System Architecture**
+## 6. System Architecture
 
 6.1 **High-Level Block Diagram**
 
@@ -145,7 +145,7 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
 
 ---
 
-**7. Data Model**
+## 7. Data Model
 
 7.1 **User Table**
 
@@ -167,7 +167,7 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
 
 ---
 
-**8. API Interfaces**
+## 8. API Interfaces
 
 8.1 **Web Endpoints**
 
@@ -191,13 +191,16 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
     - `Content-Type: application/json`
     - `Authorization: Bearer <DEEPSEEK_API_KEY>`
   - **Body:**
+
     ```json
     {
       "model": "deepseek-chat",
       "messages": [{"role": "user", "content": "<prompt>"}]
     }
     ```
+
   - **Response Handling:**
+
     ```python
     if response.status_code == 200:
         result = response.json()
@@ -208,14 +211,14 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
 
 ---
 
-**9. Security Considerations**
+## 9. Security Considerations
 
 - API key stored in environment variable; use Docker secrets for production.
 - Hardened HTTP headers via `@app.after_request` decorator.
 
 ---
 
-**10. Constraints and Assumptions**
+## 10. Constraints and Assumptions
 
 - DeepSeek API SLAs and uptime are external dependencies.
 - SQLite is used for v1; plan migration to a client-server DBMS.
@@ -223,7 +226,7 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
 
 ---
 
-**11. Appendix**
+## 11. Appendix
 
 - A. Flask extensions and versions
 - B. Database schema SQL scripts
@@ -232,4 +235,3 @@ User Browser ↔ Caddy (HTTPS) ↔ Gunicorn Worker ↔ Flask App
 ---
 
 *End of Software Specification Document.*
-

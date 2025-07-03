@@ -16,7 +16,8 @@
 
     <form method="POST" action="{{ url_for('chat.chat') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <textarea class="form-control" name="prompt"></textarea>
+        <label for="prompt-textarea" class="form-label">Enter your prompt:</label>
+        <textarea id="prompt-textarea" class="form-control" name="prompt" title="Prompt input" placeholder="Type your message here..."></textarea>
         <button type="submit" class="btn btn-primary mt-2">Send</button>
     </form>
     

@@ -33,7 +33,6 @@ Notes:
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user
 from .models import Chat  # Import after db is defined in models.py
-from .extensions import limiter
 from .utils import query_deepseek
 from .db import db
 
@@ -68,7 +67,7 @@ def chat():
 
     try:
         # Get response from DeepSeek
-        answer = query_deepseek(prompt)
+        answer = query_deepseek(prompt) # Custom function to query DeepSeek API from utils.py
 
         # Save to database
     

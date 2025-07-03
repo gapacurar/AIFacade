@@ -1,17 +1,17 @@
-**Analysis and Design Document (ADD) for DeepSeek Chat Application**
+# Analysis and Design Document (ADD) for DeepSeek Chat Application
 
 ---
 
-**1. Document Control**
+## 1. Document Control
 
 - **Version:** 1.0
 - **Date:** 2025-06-30
-- **Authors:** 
+- **Authors:** Bicu Andrei Ovidiu
 - **Status:** Draft
 
 ---
 
-**2. Introduction**
+## 2. Introduction
 
 2.1 **Purpose**
 
@@ -23,7 +23,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 
 ---
 
-**3. Requirements Analysis**
+## 3. Requirements Analysis
 
 3.1 **Functional Requirements** (excerpt)
 
@@ -42,7 +42,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 
 ---
 
-**4. System Overview**
+## 4. System Overview
 
 4.1 **Context Diagram**
 
@@ -53,6 +53,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 | (Browser)   |--------------->| (Flask)    |------------->|   Service   |
 +-------------+    HTTP        +------------+   REST JSON  +-------------+
 ```
+
 ![Context Diagram](context_diagram.png)
 
 4.2 **Key Scenarios**
@@ -62,7 +63,7 @@ Covers analysis of requirements, high-level and detailed design, component inter
 
 ---
 
-**5. Static Design**
+## 5. Static Design
 
 5.1 **Class Diagram**
 
@@ -102,7 +103,7 @@ project/
 
 ---
 
-**6. Dynamic Design**
+## 6. Dynamic Design
 
 6.1 **Sequence Diagram: Prompt Submission**
 
@@ -116,6 +117,7 @@ ChatService -> DB: save(User, prompt, response)
 ChatService -> ChatRoute: return(response)
 ChatRoute -> User: render chat page with updated history
 ```
+
 ![Sequence Diagram](sequence_diagram_prompt_submission.png)
 
 6.2 **State Diagram: Chat Session**
@@ -136,11 +138,12 @@ ChatRoute -> User: render chat page with updated history
    |               |
    |-- logout() --> [Logged Out]
 ```
+
 ![State Diagram](state_diagram_chat_session.png)
 
 ---
 
-**7. Component Design and Interfaces**
+## 7. Component and Design Interfaces
 
 7.1 **AuthService**
 
@@ -162,13 +165,14 @@ ChatRoute -> User: render chat page with updated history
 
 ---
 
-**8. Data Design**
+## 8. Data Design
 
 8.1 **ER Diagram**
 
 ```plaintext
 User (1) ──< Chat (many)
 ```
+
 ![ER Diagram](er_diagram.png)
 
 8.2 **Schema Definition** (SQLAlchemy)
@@ -190,7 +194,7 @@ class Chat(db.Model):
 
 ---
 
-**9. Design Decisions and Rationale**
+## 9. Design Decisions and Rationale
 
 - **Factory Pattern:** Enables multiple configurations (test, development, production).
 - **Blueprints:** Encapsulate auth and chat logic for maintainability.
@@ -200,7 +204,7 @@ class Chat(db.Model):
 
 ---
 
-**10. Future Enhancements**
+## 10. Future Enhancements
 
 - Migrate to PostgreSQL/MySQL for concurrency.
 - Implement pagination and search for chat history.
@@ -210,7 +214,7 @@ class Chat(db.Model):
 
 ---
 
-**11. References**
+## 11. References
 
 - Flask Documentation: [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
 - SQLAlchemy ORM: [https://docs.sqlalchemy.org/](https://docs.sqlalchemy.org/)
@@ -219,4 +223,3 @@ class Chat(db.Model):
 ---
 
 *End of Analysis and Design Document.*
-
