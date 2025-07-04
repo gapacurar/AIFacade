@@ -1,4 +1,4 @@
-# Software Specification Document (SSD) for DeepSeek Chat Application
+# Software Specification Document (SSD) for AIFacade Application
 
 ---
 
@@ -15,7 +15,7 @@
 
 2.1 **Purpose**
 
-This Software Specification Document defines the functional and non-functional requirements, system architecture, interfaces, data models, and design constraints for the DeepSeek Chat Application. It serves as the single source of truth for developers, QA engineers, and stakeholders.
+This Software Specification Document defines the functional and non-functional requirements, system architecture, interfaces, data models, and design constraints for the AIFacade Application. It serves as the single source of truth for developers, QA engineers, and stakeholders.
 
 2.2 **Scope**
 

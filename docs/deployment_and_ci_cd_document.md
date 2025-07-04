@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-This document describes the steps and technologies used to deploy and manage the DeepSeek Chat application across environments. It includes local Docker usage, container orchestration and continuous integration/deployment via GitHub Actions.
+This document describes the steps and technologies used to deploy and manage the AIFacade application across environments. It includes local Docker usage, container orchestration and continuous integration/deployment via GitHub Actions.
 
 ## 2. Deployment Architecture
 
