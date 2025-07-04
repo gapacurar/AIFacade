@@ -1,3 +1,17 @@
+<!--
+    base.html
+
+    This is the base template for the web application.
+
+    - Uses Bootstrap 5.3.0 for styling and responsive design.
+    - Loads a custom stylesheet from the static directory (style.css).
+    - Defines two Jinja2 template blocks:
+        - 'title': For setting the page title in child templates.
+        - 'content': For injecting the main content of each page.
+    - Includes Bootstrap's JavaScript bundle for interactive components.
+
+    Child templates should extend this base and override the 'title' and 'content' blocks as needed.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>

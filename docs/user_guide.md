@@ -48,9 +48,10 @@ Create a __.env__ file IF __it doesn't exist already__:
 ```env
 SECRET_KEY = supersecretkey
 DATABASE_URI = sqlite:///users.db
-DEEPSEEK_API_KEY = yourapikey <- This can be generated from <https://platform.deepseek.com/api_keys>.
+DEEPSEEK_API_KEY = yourapikey
 ```
 
+The DEEPSEEK_API_KEY can be generated from <https://platform.deepseek.com/api_keys>
 Configure the database using CLI commands if there is no __instance/users.db__ in your root directory.
 
 ```sh

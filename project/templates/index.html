@@ -1,3 +1,30 @@
+<!-- 
+  index.html
+
+  This template renders the main AI Web Interface page.
+
+  Features:
+  - Displays flashed messages (success or error) to the user.
+  - Provides a logout button for the authenticated user.
+  - Contains a form for submitting prompts to the AI assistant.
+    - Includes CSRF protection.
+    - Uses a textarea for prompt input.
+  - Contains a form to clear the chat history.
+    - Includes CSRF protection.
+  - Displays the conversation history between the user and the assistant.
+    - Each user prompt and assistant response is shown in styled cards.
+    - Assistant responses are rendered as safe HTML.
+
+  Template Inheritance:
+  - Extends 'base.html'.
+  - All content is placed within the 'content' block.
+
+  Context Variables:
+  - 'conversation': List of (prompt, response) tuples to display chat history.
+  - 'csrf_token': CSRF token for form security.
+  - 'get_flashed_messages': Flask function to retrieve flashed messages.
+-->
+  
 <!-- templates/index.html -->
 {% extends "base.html" %}
 {% block content %}

@@ -1,3 +1,28 @@
+# Docker Compose configuration for Flask app with Caddy reverse proxy
+#
+# Services:
+#   web:
+#     - Builds the Flask application from the current directory.
+#     - Container is named 'flask_app'.
+#     - Exposes port 5000 for development.
+#     - Loads environment variables from a .env file.
+#     - Sets PYTHONPATH for the app.
+#     - Mounts the project directory for hot reload and persistence.
+#     - Mounts the 'instance' directory to persist the SQLite database.
+#     - Always restarts on failure.
+#
+#   caddy:
+#     - Uses the official Caddy v2 image as a reverse proxy.
+#     - Container is named 'caddy'.
+#     - Exposes HTTP (80) and HTTPS (443) ports.
+#     - Mounts the Caddyfile for configuration.
+#     - Uses named volumes for Caddy data and config persistence.
+#     - Depends on the 'web' service to ensure it starts after Flask.
+#
+# Volumes:
+#   caddy_data:   # Persists Caddy runtime data (e.g., certificates)
+#   caddy_config: # Persists Caddy configuration
+
 services:
   web:
     build: .

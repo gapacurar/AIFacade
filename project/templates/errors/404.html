@@ -1,3 +1,25 @@
+<!-- 
+    404.html - Custom 404 Error Page Template
+
+    Description:
+    This template extends the base layout and displays a user-friendly 404 "Page Not Found" error message.
+    It features a Bootstrap-styled container with a prominent error icon, error code, and helpful message.
+    A button is provided to navigate users back to the home page.
+
+    Blocks:
+    - title: Sets the page title to "Page Not Found".
+    - content: Main content area displaying the error details and navigation option.
+
+    Features:
+    - SVG icon for visual emphasis of the error.
+    - Responsive Bootstrap layout for proper alignment and spacing.
+    - Uses Flask's url_for to generate the home page link dynamically.
+
+    Usage:
+    Place this template in your Flask application's templates/errors directory.
+    Configure your Flask app to render this template for 404 errors.
+-->
+
 {% extends "base.html" %}
 
 {% block title %}Page Not Found{% endblock %}
