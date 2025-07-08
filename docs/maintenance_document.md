@@ -100,7 +100,7 @@ Reset SQLite (dev only)
 rm -rf ./instance/*
 ```
 
-## 5. Testing in production
+## 5. Testing in production - TO DO the developer team never test the application in production. This is the job of the final users and support team on all layers of support! The testers are testing the application on the Alpha Testing, Beta Testing and Staging Instances if these exists.
 
 1. Trigger a GitHub workflow manually (via UI or pushing a test branch)
 2. Use

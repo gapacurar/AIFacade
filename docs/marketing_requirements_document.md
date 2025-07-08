@@ -1,8 +1,14 @@
 # Marketing Requirements Document (MRD)
 
+**TO DO**
+**The document control is mandatory in all documents**
+
 ## 1. Executive
 
 Our product is a secure, easy-to-use chatbot web application powered by DeepSeek’s AI API. It enables users to create accounts, log in, and interact with an AI assistant through a simple web interface. The application focuses on privacy, security, and developer-friendly deployment via Docker.
+
+**TO DO**
+**Please do not specify DeepSeek as long as this app should be extended in the future with other AI engines. Specify just the current AI model**
 
 ---
 
@@ -88,3 +94,6 @@ Dave is a developer who needs a safe and private space to experiment with AI cha
 Stella leads a small startup team looking for an affordable chatbot interface that doesn’t tie them to a commercial SaaS provider. She needs something that just works out of the box.
 
 Sam is a student learning web development and AI integration. For him, the platform is both a teaching tool and a playground—open, inspectable, and safe.
+
+**TO DO** 
+**For the MRD is always necessary to specify a Glossay for all technical terms and concepts you are using (light application), and a mandatory list of references** 

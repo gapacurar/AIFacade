@@ -14,6 +14,9 @@ __Web server__: Caddy handles HTTPS (self-signed for dev).
 __App server__: Gunicorn runs Flask inside Docker container.
 __DB__: SQLite stored persistently via instance/ volume.
 
+**TO DO**
+**A components/deployment diagram should be creted here to understand the interconections and the platform. The docker component should be represented here also. The role of port 5000 should be also visible.**
+
 ## 3. Local Deployment (Developer Environment)
 
 To run the app locally with Docker:
@@ -24,7 +27,10 @@ docker compose up
 
 ```
 
-This app is accessible at: __<https://localhost>__
+This app is accessible at: __<https://localhost>__ 
+
+**TO DO**
+**Please explain why Gunicorn configuration file sets the port 5000. Or complete the accessible port here.**
 
 To shut down:
 
@@ -56,6 +62,9 @@ errorlog = "-"
 ```
 
 This config starts with 4 workers, waits up to 120 seconds before killing a request and Logs to stdout/stderr
+
+**TO DO**
+**Please expalin why the value is 120, what means and why is necessary to do that.**
 
 ## 6. Cady Configuration
 
@@ -99,11 +108,17 @@ Run Tests (docker compose run --rm web pytest tests/ -v)
 
 Tear Down (docker compose down --volumes)
 
+**TO DO**
+**When you specify a mandatory irder of the list please use a numbered list. I mean from 1 to 7 in our case.**
+
 ### Notes
 
 Tests run in a temporary container with the app context.
 
 Secrets (like the API key) must be provided in repository/environment settings.
+
+**TO DO**
+**Please elaborate more these two sentences. These are too abstract.**
 
 ## 9. Assumptions & Requirements
 
@@ -119,3 +134,6 @@ No staging/production environments defined yet.
 3. Implement GitHub environments or runners for deployment approvals.
 4. Use Docker secrets or HashiCorp Vault for managing credentials.
 5. Add rollback support in case of test failure or bad deploy.
+
+**TO DO**
+**Here please specify also the extended flexibility for the user to chose another AI engine**.

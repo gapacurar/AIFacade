@@ -64,6 +64,9 @@ This wil stop the application and also delete the __volumes__.
 
 For more informations about the basic stuff visit [User Guide](user_guide.md)
 
+**TO DO**
+**All the content in the first chapter is for the user guide. If the info is already there you do not duplicate it here. Mainly this content should be in the Developer Guide and not here. You can keep the refernce.**
+
 ## 2. Database
 
 ### Models
@@ -91,7 +94,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 ```
 
-For the user model we create a direct relationship with the __chat__  model and we use the @property and @password.setter decorators in order to generate a hash automatically whenever we insert a new User in the database. The check_password function will be used to verify the hash for the login method.
+For the __user__ model we create a direct relationship with the __chat__  model and we use the @property and @password.setter decorators in order to generate a hash automatically whenever we insert a new User in the database. The check_password function will be used to verify the hash for the login method.
 
 ```python
 class Chat(db.Model):
@@ -104,7 +107,7 @@ class Chat(db.Model):
     response = db.Column(db.Text, nullable=False)
 ```
 
-The chat model is also pretty straight forward. We collect the prompt the user inserted and we retrieve the response from the api while linking via FK the user_id to the id of the User model. Timestamp is automatically.
+The __chat__ model is also pretty straight forward. We collect the prompt the user inserted and we retrieve the response from the api while linking via FK the user_id to the id of the User model. Timestamp is automatically.
 I chose this way of storing the responses because its easier to maintain the history of each individual user and because the session cookies flask provided are not good enough when it comes to different users logging from the same device.
 
 ### db.py
@@ -916,3 +919,6 @@ This workflow is automatically triggered on __push__ events on:
 5. Wait for app - Optional buffer to let Flask/Gunicorn fully start.
 6. Run tests - Executes all tests in the __tests/__ folder using __pytest__.
 7. Tear down - Cleans up containers associated volumes.
+
+**TO DO**
+**At the end of this document we advise the developer to follow carefully the comment in the code and we specify at list one contact of you as author. This is a good practice in the open-source software (OSS)**

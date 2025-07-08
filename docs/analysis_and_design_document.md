@@ -11,7 +11,7 @@
 
 ---
 
-## 2. Introduction
+## 2. Introduction 
 
 2.1 **Purpose**
 
@@ -27,13 +27,15 @@ This document details the architectural and design blueprint for the AIFacade ap
 
 3.1 **Functional Requirements** (excerpt)
 
-At its core, AIFacade is built around the needs of a single user interacting with an AI system. That journey begins with secure user registration and authentication, relying on hashed passwords to ensure sensitive information is never exposed. Once inside, users submit prompts, receive AI responses, and see their conversation unfold inline on a single page—mirroring the elegance of a chat app with none of the overhead.
+AIFacade is fundamentally designed to cater to the requirements of authorized and authenticated users who engage with an AI system. Its architecture focuses on ensuring seamless interaction, prioritizing user experience, and enhancing the overall efficiency of AI-driven tasks. By addressing the specific needs of these users, AIFacade aims to create a robust platform that supports effective collaboration between humans and AI, enabling users to harness the full potential of artificial intelligence in their workflows. The user journey begins with secure user registration and authentication, relying on hashed passwords to ensure sensitive information is never exposed. Once inside, users submit prompts, receive AI responses, and see their conversation unfold inline on a single page—mirroring the elegance of a chat app with none of the overhead.
 
 Users can also clear their chat history entirely, which removes not just the messages but the context—freeing them to start anew. In rare moments when things go wrong, such as accessing a nonexistent route or when an internal error occurs, custom pages appear to gently redirect them, without breaking immersion.
 
 3.2 **Non-Functional Requirements**
 
 Behind the scenes, several essential guarantees shape the experience. Security measures like CSRF tokens and strict HTTP headers protect every form submission and interaction. To avoid abuse and maintain fair usage, the system applies rate limits on prompt submissions. The UI, while optimized for desktop experiences, is built using Bootstrap to allow some measure of responsiveness. And throughout the codebase, design decisions favor maintainability—evidenced by clean separation of modules and a testing regime that aims for near-complete coverage.
+
+At its core, AIFacade is built around the needs of any authorized and authenticated user interacting with an AI system. Behind the scenes, several essential guarantees shape the experience. Security measures such as CSRF tokens and strict HTTP headers protect every form submission and interaction. To combat classical security threats like SQL injection, the system implements parameterized queries and input validation to ensure data integrity and prevent unauthorized access. Additionally, to avoid abuse and maintain fair usage, the system applies rate limits on prompt submissions. The UI, while optimized for desktop experiences, is built using Bootstrap to allow some measure of responsiveness. Throughout the codebase, design decisions favor maintainability—evidenced by clean separation of modules and a testing regime that aims for near-complete coverage.
 
 ## 4. System Overview
 
@@ -70,6 +72,10 @@ Around this backbone are three essential service classes. AuthService manages ev
 - `User` with attributes `id`, `username`, `password_hash`.
 - `Chat` with attributes `id`, `user_id`, `prompt`, `response`, `timestamp`.
 - `AuthService`, `ChatService`, and `ApiClient` classes for business logic.
+
+**TO DO**
+When adhering to Object-Oriented Design (OOD) and Object-Oriented Programming (OOP) principles, managing private attributes within a class requires the implementation of both a getter and a setter method. These methods allow you to safely access and modify the value of the private attribute. For example, you might define a getter method named getUsername() that returns the current value, and a setter method named setUsername(IdType newValue) that updates the value of the private attribute. This approach ensures encapsulation and maintains the integrity of your class.
+*Please apply this rule in all classes you created.*
 
 5.2 **Package/Module Structure**
 
@@ -110,6 +116,8 @@ When a user sends a prompt, the sequence begins. The request lands on a POST rou
 6.2 **State Diagram: Chat Session**
 
 From the moment the user first arrives, they exist in a "Logged Out" state. Upon logging in, they enter the "Logged In" state—capable of submitting prompts and clearing chat history. Each prompt triggers a temporary state of "Awaiting API Response," which resolves into either "Displaying Response" or "History Updated." At any point, users can reset the state entirely by logging out, returning to where they began. This state machine ensures predictability and clarity throughout the interaction lifecycle.
+**TO DO**
+**Please provide an explanation of how you maintain user state and prevent unauthorized or unauthenticated users from accessing the application.The diagram is accurate and should remain unchanged!**
 
 ![State Diagram](state_diagram_chat_session.png)
 
@@ -163,6 +171,12 @@ class Chat(db.Model):
 Several architectural choices shape the stability and flexibility of AIFacade. The factory pattern enables modular startup modes, ideal for testing, development, and production. By dividing logic into Blueprints, the code remains easy to navigate and extend. SQLite was chosen for v1 because it requires zero setup, making it ideal for early-stage development; but the design anticipates a migration to PostgreSQL for concurrency and scale.
 
 The UI is built with Bootstrap, prioritizing speed and simplicity over pixel-perfect design. As for security, HTTP headers like Content-Security-Policy and Referrer-Policy are automatically appended to every response, thanks to a centralized hook. These headers, silent but powerful, help protect users without requiring any intervention
+
+**TO DO**
+**As architect you have to explain also the type of attributes in the classes and the type of data you used. Why Integer and not Long?**
+
+**TO DO**
+**Please decribe also the security aspects here**
 
 ## 10. Future Enhancements
 
