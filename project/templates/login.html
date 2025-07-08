@@ -1,5 +1,22 @@
+<!--
+    login.html
+
+    Template for the user login page.
+
+    - Extends: base.html
+    - Title: "Login - AIFacade"
+    - Displays a login form for users to enter their credentials.
+    - Shows flash messages for errors or success (e.g., invalid login, registration success).
+    - Includes CSRF protection via hidden token.
+    - Fields:
+        - Username (required)
+        - Password (required)
+    - Provides a link to the registration page for new users.
+    - Uses Bootstrap classes for responsive and styled layout.
+-->
+
 {% extends "base.html" %}
-{% block title %}Login - DeepSeek Chat{% endblock %}
+{% block title %}Login - AIFacade {% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -21,7 +38,8 @@
                     {% endwith %}
 
                     <!-- Login Form -->
-                    <form method="POST" action="{{ url_for('login') }}">
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -32,7 +50,7 @@
                         </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="{{ url_for('register') }}" class="btn btn-link">Need an account? Register</a>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-link">Need an account? Register</a>
                         </div>
                     </form>
                 </div>

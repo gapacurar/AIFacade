@@ -3,6 +3,7 @@ This Python web application is not ready.
 Your final practical exam will involve completing and fine-tuning it according to the specifications.
 
 Also, you'll need to create specific documentation related to this Python web application:
+
 1. The complete Marketing requirements document.
 2. The Software Specification Document.
 3. The Analysis and Design document. Associated UML diagrams will also be created and referenced in the ADD document.

@@ -1,3 +1,28 @@
+<!--
+    505.html - Custom Server Error Page Template
+
+    Description:
+    This template extends the base layout and displays a user-friendly error page for server errors (HTTP 500).
+    It uses Bootstrap classes for styling and layout, and includes an SVG server icon for visual emphasis.
+
+    Blocks:
+    - title: Sets the page title to "Server Error".
+    - content: Main content area displaying the error message, icon, and a button to return to the home page.
+
+    Features:
+    - Responsive design using Bootstrap grid system.
+    - Prominent display of error code (500) and message.
+    - SVG icon for visual context.
+    - "Go Back Home" button navigates users to the chat home page using Flask's url_for.
+
+    Usage:
+    Place this template in the 'templates/errors/' directory.
+    Render this template when a server error (HTTP 500) occurs in your Flask application.
+
+    Note:
+    The error code in the filename is '505', but the displayed error is '500'. 
+    Ensure consistency between the filename and the error code as needed.
+-->
 {% extends "base.html" %}
 
 {% block title %}Server Error{% endblock %}
@@ -15,7 +40,7 @@
             <p class="lead">
                 Something went wrong on our end. We're working to fix it!
             </p>
-            <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg px-4 mt-3">
+            <a  href="{{ url_for('chat.home') }}" class="btn btn-primary btn-lg px-4 mt-3" title="Go Back Home">
                 ← Go Back Home
             </a>
         </div>

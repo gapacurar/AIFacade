@@ -1,0 +1,72 @@
+<!--
+    Template: register.html
+
+    Description:
+    ------------
+    This template renders the user registration page for the AIFacade application.
+    It extends the base layout and provides a registration form for new users.
+
+    Main Features:
+    --------------
+    - Displays a registration form with fields for username and password.
+    - Includes CSRF protection via a hidden token field.
+    - Shows flash messages for error or success feedback after form submission.
+    - Provides a link to the login page for users who already have an account.
+    - Utilizes Bootstrap classes for responsive and styled layout.
+
+    Blocks:
+    -------
+    - title: Sets the page title to "Login - AIFacade".
+    - content: Contains the registration form and related UI elements.
+
+    Usage:
+    ------
+    - The form submits a POST request to the 'auth.register' endpoint.
+    - Flash messages are displayed using Flask's get_flashed_messages.
+    - The template expects 'csrf_token' to be available in the context.
+-->
+
+{% extends "base.html" %}
+{% block title %}Login - AIFacade {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Register</h2>
+                    
+                    <!-- Flash Messages (for errors/success) -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} mb-3">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Login Form -->
+                    <form method="POST" action="{{ url_for('auth.register') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-link">Already have an account? Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

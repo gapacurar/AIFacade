@@ -1,0 +1,27 @@
+/* 
+
+    Description:
+    This CSS file contains the styles for the AIFacade project. 
+    Use this file to define the layout, colors, fonts, and other visual aspects 
+    of the application's user interface.
+
+    Usage:
+    Link this stylesheet in your HTML files to apply consistent styling 
+    across the project.
+
+    Note:
+    Add your custom CSS rules below to style the components as needed.
+*/
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+textarea {
+    resize: none;
+
+}

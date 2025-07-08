@@ -1,0 +1,75 @@
+<!-- 
+  index.html
+
+  This template renders the main AI Web Interface page.
+
+  Features:
+  - Displays flashed messages (success or error) to the user.
+  - Provides a logout button for the authenticated user.
+  - Contains a form for submitting prompts to the AI assistant.
+    - Includes CSRF protection.
+    - Uses a textarea for prompt input.
+  - Contains a form to clear the chat history.
+    - Includes CSRF protection.
+  - Displays the conversation history between the user and the assistant.
+    - Each user prompt and assistant response is shown in styled cards.
+    - Assistant responses are rendered as safe HTML.
+
+  Template Inheritance:
+  - Extends 'base.html'.
+  - All content is placed within the 'content' block.
+
+  Context Variables:
+  - 'conversation': List of (prompt, response) tuples to display chat history.
+  - 'csrf_token': CSRF token for form security.
+  - 'get_flashed_messages': Flask function to retrieve flashed messages.
+-->
+  
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} mb-3">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+<div class="container">
+    <h1>AI Web Interface</h1>
+    <a role="button" class="btn btn-outline-warning" href="{{url_for('auth.logout')}}">logout</a>
+
+    <form method="POST" action="{{ url_for('chat.chat') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="prompt-textarea" class="form-label">Enter your prompt:</label>
+        <textarea id="prompt-textarea" class="form-control" name="prompt" title="Prompt input" placeholder="Type your message here..."></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Send</button>
+    </form>
+    
+   <form action="{{ url_for('chat.clear_chat') }}" method="POST" class="mb-3">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-danger">Clear Chat History</button>
+</form>
+
+<!-- Display conversation -->
+<div id="chat-container">
+  {% for prompt, response in conversation %}
+    <div class="card mb-2">
+      <div class="card-header bg-primary text-white">You</div>
+      <div class="card-body">
+        <p class="card-text">{{ prompt }}</p>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white">Assistant</div>
+      <div class="card-body">
+        <div class="card-text">{{ response|safe }}</div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}
