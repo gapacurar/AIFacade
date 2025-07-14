@@ -121,6 +121,4 @@ No staging/production environments defined yet.
 3. Implement GitHub environments or runners for deployment approvals.
 4. Use Docker secrets or HashiCorp Vault for managing credentials.
 5. Add rollback support in case of test failure or bad deploy.
-
-**TO DO**
-**Here please specify also the extended flexibility for the user to chose another AI engine**.
+6. Add more AI engines from which the user can choose to chat. Examples: ChatGPT, Gemini.
