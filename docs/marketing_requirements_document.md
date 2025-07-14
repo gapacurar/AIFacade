@@ -1,7 +1,11 @@
 # Marketing Requirements Document (MRD)
 
-**TO DO**
-**The document control is mandatory in all documents**
+## Document Control
+
+- **Version:** 1.0
+- **Date:** 2025-06-30
+- **Authors:** Bicu Andrei Ovidiu
+- **Status:** Final
 
 ## 1. Executive
 

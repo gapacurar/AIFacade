@@ -1,5 +1,12 @@
 # Deployment and CI/CD Document
 
+## Document Control
+
+- **Version:** 1.0
+- **Date:** 2025-06-30
+- **Authors:** Bicu Andrei Ovidiu
+- **Status:** Final
+
 ## 1. Overview
 
 This document describes the steps and technologies used to deploy and manage the AIFacade application across environments. It includes local Docker usage, container orchestration and continuous integration/deployment via GitHub Actions.

@@ -1,5 +1,13 @@
 # User Guide Document
 
+## Document Control
+
+- **Version:** 1.0
+- **Date:** 2025-06-30
+- **Authors:** Bicu Andrei Ovidiu
+- **Status:** Final
+
+
 ## Table of Contents
 
 1. Introduction

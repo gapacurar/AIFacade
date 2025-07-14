@@ -1,5 +1,13 @@
 # Maintenance Document
 
+## Document Control
+
+- **Version:** 1.0
+- **Date:** 2025-06-30
+- **Authors:** Bicu Andrei Ovidiu
+- **Status:** Final
+
+
 ## Overview
 
 This document provides guidelines for maintaining the Flask web application deployed via Docker, Gunicorn and Caddy. It includes instructions for updates, logging, monitoring, dependency management and common troubleshooting procedures.

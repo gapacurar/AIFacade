@@ -1,5 +1,12 @@
 # Developer Guide Document
 
+## Document Control
+
+- **Version:** 1.0
+- **Date:** 2025-06-30
+- **Authors:** Bicu Andrei Ovidiu
+- **Status:** Final
+
 ## Overview
 
 This document will take you through the whole application's infrastructure. This Web Application has been created as a small project.
