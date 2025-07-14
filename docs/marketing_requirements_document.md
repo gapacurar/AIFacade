@@ -9,10 +9,7 @@
 
 ## 1. Executive
 
-Our product is a secure, easy-to-use chatbot web application powered by DeepSeek’s AI API. It enables users to create accounts, log in, and interact with an AI assistant through a simple web interface. The application focuses on privacy, security, and developer-friendly deployment via Docker.
-
-**TO DO**
-**Please do not specify DeepSeek as long as this app should be extended in the future with other AI engines. Specify just the current AI model**
+Our product is a secure, easy-to-use chatbot web application powered by an AI model via a modular API interface (currently using DeepSeek). It enables users to create accounts, log in, and interact with an AI assistant through a simple web interface. The application focuses on privacy, security, and developer-friendly deployment via Docker.
 
 ---
 
