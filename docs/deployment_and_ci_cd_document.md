@@ -62,8 +62,9 @@ errorlog = "-"
 
 This config starts with 4 workers, waits up to 120 seconds before killing a request and Logs to stdout/stderr
 
-**TO DO**
-**Please expalin why the value is 120, what means and why is necessary to do that.**
+The timeout = 120 setting tells Gunicorn to wait up to 120 seconds for a worker to complete a request before forcefully terminating it.
+This is important for handling long-running requests—such as calls to external APIs, AI model inference, or chat generation—that may take longer than the default timeout (30 seconds).
+Without this increased timeout, Gunicorn could prematurely kill valid but slow requests, leading to user-facing errors.
 
 ## 6. Cady Configuration
 
