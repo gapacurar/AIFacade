@@ -112,8 +112,7 @@ When a user sends a prompt, the sequence begins. The request lands on a POST rou
 6.2 **State Diagram: Chat Session**
 
 From the moment the user first arrives, they exist in a "Logged Out" state. Upon logging in, they enter the "Logged In" state—capable of submitting prompts and clearing chat history. Each prompt triggers a temporary state of "Awaiting API Response," which resolves into either "Displaying Response" or "History Updated." At any point, users can reset the state entirely by logging out, returning to where they began. This state machine ensures predictability and clarity throughout the interaction lifecycle.
-**TO DO**
-**Please provide an explanation of how you maintain user state and prevent unauthorized or unauthenticated users from accessing the application.The diagram is accurate and should remain unchanged!**
+We use Flask-Login to manage user authentication, tracking login state via login_user(), logout_user() and current_user. The LoginManager is initialized on app creation once with a user_loader to restore sessions. Furthermore, if the user is not authenticated - unauthorized & unauthenticated, he won't be able to chat with the AI because he will simply always be redirected to the login page unless authenticated.
 
 ![State Diagram](state_diagram_chat_session.png)
 
