@@ -6,66 +6,7 @@ This document will take you through the whole application's infrastructure. This
 
 ## 1. QuickStart
 
-Before you can start the application you have to make sure that you have in your root 2 key components
-
-1. instance/users.db
-2. .env
-
-### Missing instance/users.db?
-
-If you don't have the __users.db__, in your *shell* write at root directory
-
-```sh
-flask --app project init-db
-```
-
-This wil initialize our implemented CLI Command to create the __instance/__ dir alongside with the __users.db__ database and the necessary tables.
-
-### Missing .env?
-
-Create the __.env__ file at your root and be sure you implement the following
-
-1. __DEEPSEEK_API_KEY__: This can be generated from <https://platform.deepseek.com/api_keys>.
-2. __SECRET_KEY__: Pass any string you want to be. You can also encrypt it.
-3. __DATABASE_URI__: "sqlite:///users.db" this is the default string for it.
-
-### Starting Application
-
-You can start the application in 2 ways.
-
-1. By installing docker and then creating an image of the application. If you choose this note that you will have Caddy available.
-2. By simply starting it in the terminal.
-
-For __Docker__
-
-```sh
-docker compose up --build -d
-```
-
-This command will build up the image and then will start the application.
-
-For __Terminal__
-
-```sh
-flask --app project run --debug
-```
-
-The *--debug* at the end is optional. This will start the application.
-
-In order to stop the dockerized application:
-
-```sh
-docker compose down -v
-```
-
-This wil stop the application and also delete the __volumes__.
-
-### More informations
-
 For more informations about the basic stuff visit [User Guide](user_guide.md)
-
-**TO DO**
-**All the content in the first chapter is for the user guide. If the info is already there you do not duplicate it here. Mainly this content should be in the Developer Guide and not here. You can keep the refernce.**
 
 ## 2. Database
 
