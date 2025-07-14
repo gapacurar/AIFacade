@@ -27,10 +27,7 @@ docker compose up
 
 ```
 
-This app is accessible at: __<https://localhost>__ 
-
-**TO DO**
-**Please explain why Gunicorn configuration file sets the port 5000. Or complete the accessible port here.**
+This app is accessible at: __<https://localhost>__
 
 To shut down:
 
@@ -41,6 +38,8 @@ docker compose down --volumes
 Volumes:
     -./instance:/app/instance ensures the SQLite DB persists across restarts.
     - caddy_data and caddy_config persist TLS certs.
+
+Note: Although Gunicorn runs on port 5000 ---the standard port used by Flask app in development---, you're not connecting to it directly. The Caddyfile proxies HTTPS requests on port 443 (the default for browsers) to Gunicorn at web:5000. This allows you to simply use __<https://localhost>__ in your browser.
 
 ## 4. Dockerfile
 

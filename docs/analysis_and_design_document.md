@@ -173,7 +173,7 @@ We have several layers for security: All forms are protected with CSRF tokens vi
 
 ## 10. Future Enhancements
 
-The story doesn’t end here. Several chapters remain unwritten. The system is poised to adopt PostgreSQL or MySQL for robust persistence. It can support pagination and search, improving usability as chat histories grow. Kubernetes could handle orchestration, while tools like Prometheus and Grafana would monitor system health. An admin dashboard could emerge, giving maintainers real-time insights into usage and performance. 
+The story doesn’t end here. Several chapters remain unwritten. The system is poised to adopt PostgreSQL or MySQL for robust persistence. It can support pagination and search, improving usability as chat histories grow. Kubernetes could handle orchestration, while tools like Prometheus and Grafana would monitor system health. An admin dashboard could emerge, giving maintainers real-time insights into usage and performance.
 
 These enhancements aren’t afterthoughts-they’re part of the roadmap. The foundation has been laid.
 
