@@ -94,22 +94,13 @@ Push to main or final-exam
 
 ### Steps
 
-Checkout Code
-
-Set up Docker BuildX
-
-Build Containers (docker compose build)
-
-Start App in Background (docker compose up -d)
-
-Wait 5 seconds (optional init wait)
-
-Run Tests (docker compose run --rm web pytest tests/ -v)
-
-Tear Down (docker compose down --volumes)
-
-**TO DO**
-**When you specify a mandatory irder of the list please use a numbered list. I mean from 1 to 7 in our case.**
+1. Checkout Code
+2. Set up Docker BuildX
+3. Build Containers (docker compose build)
+4. Start App in Background (docker compose up -d)
+5. Wait 5 seconds (optional init wait)
+6. Run Tests (docker compose run --rm web pytest tests/ -v)
+7. Tear Down (docker compose down --volumes)
 
 ### Notes
 
