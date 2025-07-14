@@ -14,8 +14,7 @@ __Web server__: Caddy handles HTTPS (self-signed for dev).
 __App server__: Gunicorn runs Flask inside Docker container.
 __DB__: SQLite stored persistently via instance/ volume.
 
-**TO DO**
-**A components/deployment diagram should be creted here to understand the interconections and the platform. The docker component should be represented here also. The role of port 5000 should be also visible.**
+![Deployment Diagram](deployment_diagram.jpg)
 
 ## 3. Local Deployment (Developer Environment)
 
