@@ -104,12 +104,9 @@ Push to main or final-exam
 
 ### Notes
 
-Tests run in a temporary container with the app context.
+Tests run in a temporary container with the app context. This means the test suite (pytest) is executed inside a disposable Docker container that shares the same environment as the main app including the database, dependencies and config files; ensuring realistic and isolated test conditions without affecting the live environment.
 
-Secrets (like the API key) must be provided in repository/environment settings.
-
-**TO DO**
-**Please elaborate more these two sentences. These are too abstract.**
+Secrets (like the API key) must be provided in repository/environment settings. Sensitive values such as API keys, database URLs, or authentication tokens should not be hardcoded in the worklflow code. Instead, they must be securely defined in the GitHub repository's Settings > Secrets and variables > Actions. These secrets are injected into the CI/CD environment during the build and test process using GitHub's secure mechanism (e.g., via environment variables). In conclusion, once real secrets, API Keys etc will be stored in the .env file you should add the .env file to .gitignore and store those secrets in the path provided above.
 
 ## 9. Assumptions & Requirements
 
