@@ -920,5 +920,8 @@ This workflow is automatically triggered on __push__ events on:
 6. Run tests - Executes all tests in the __tests/__ folder using __pytest__.
 7. Tear down - Cleans up containers associated volumes.
 
-**TO DO**
-**At the end of this document we advise the developer to follow carefully the comment in the code and we specify at list one contact of you as author. This is a good practice in the open-source software (OSS)**
+## Final Notes
+
+Developers are encouraged to follow the comments in the source code closely. These often contain important configuration instructions or warnings that affect correct deployment and use.
+
+For feedback, issues, or contributions, please contact the author: [https://github.com/oveandrei](https://github.com/oveandrei).
