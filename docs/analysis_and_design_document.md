@@ -11,7 +11,7 @@
 
 ---
 
-## 2. Introduction 
+## 2. Introduction
 
 2.1 **Purpose**
 
@@ -72,10 +72,6 @@ Around this backbone are three essential service classes. AuthService manages ev
 - `User` with attributes `id`, `username`, `password_hash`.
 - `Chat` with attributes `id`, `user_id`, `prompt`, `response`, `timestamp`.
 - `AuthService`, `ChatService`, and `ApiClient` classes for business logic.
-
-**TO DO**
-When adhering to Object-Oriented Design (OOD) and Object-Oriented Programming (OOP) principles, managing private attributes within a class requires the implementation of both a getter and a setter method. These methods allow you to safely access and modify the value of the private attribute. For example, you might define a getter method named getUsername() that returns the current value, and a setter method named setUsername(IdType newValue) that updates the value of the private attribute. This approach ensures encapsulation and maintains the integrity of your class.
-*Please apply this rule in all classes you created.*
 
 5.2 **Package/Module Structure**
 
