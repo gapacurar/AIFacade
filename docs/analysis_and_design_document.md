@@ -167,15 +167,13 @@ Several architectural choices shape the stability and flexibility of AIFacade. T
 
 The UI is built with Bootstrap, prioritizing speed and simplicity over pixel-perfect design. As for security, HTTP headers like Content-Security-Policy and Referrer-Policy are automatically appended to every response, thanks to a centralized hook. These headers, silent but powerful, help protect users without requiring any intervention
 
-**TO DO**
-**As architect you have to explain also the type of attributes in the classes and the type of data you used. Why Integer and not Long?**
+For the models we use Integer for id and user_id because SQLite map Integer to 32-bit or 64-bit auto-incrementing primary keys by default. SQLAlchemy does not have a separate Long type, if needed, database-level configuration or BitInteger can be used later without affecting app logic. Strings like username and password_hash use String(lenght) for efficient indexing and predictable storage size. Text fields for prompt, response use Text because they cna store arbitrarily long user-generated content, which is essential for chat interactions. Timestamps use DateTime with a default of datetime.now(timezone.utc) to ensure consistent, timezone-aware creation times for each chat. The password property is write-only, using a setter to securely hash passwords before storage via generate_password_hash() from Werkzeug and the check uses check_password_hash(). The User has a one-to-many relationship with Chat using db.relationship and cascade deletion ensures all chats are removed if a user is deleted. All attributes are public. ORM Mapping gets confused, SQLAlchemy maps class attributes to database columns, so for example if we protect an attribute like _username, in the database we will have to get the attribute by using user._username, which is not practical.
 
-**TO DO**
-**Please decribe also the security aspects here**
+We have several layers for security: All forms are protected with CSRF tokens via Flask-WTF. The application enforces strong HTTP headers including Content Security Policy, no-referrer settings, X-Frame-Options, and anti-sniffing rules. Users are limited to a maximum number of interactions per hour to mitigate abuse, enforced by Flask-Limiter. Session management is handled securely through Flask-Login.
 
 ## 10. Future Enhancements
 
-The story doesn’t end here. Several chapters remain unwritten. The system is poised to adopt PostgreSQL or MySQL for robust persistence. It can support pagination and search, improving usability as chat histories grow. Kubernetes could handle orchestration, while tools like Prometheus and Grafana would monitor system health. An admin dashboard could emerge, giving maintainers real-time insights into usage and performance.
+The story doesn’t end here. Several chapters remain unwritten. The system is poised to adopt PostgreSQL or MySQL for robust persistence. It can support pagination and search, improving usability as chat histories grow. Kubernetes could handle orchestration, while tools like Prometheus and Grafana would monitor system health. An admin dashboard could emerge, giving maintainers real-time insights into usage and performance. 
 
 These enhancements aren’t afterthoughts-they’re part of the roadmap. The foundation has been laid.
 
