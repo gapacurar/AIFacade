@@ -100,17 +100,21 @@ def test_logout(client, auth):
 
 def test_password_property_and_check(user):
     """
-    Given an user with the User model
-
-    When we try to check the password
-
-    CHECK if password is hashed, if we get attribute error if we try to extract plain text, check if password is stored correctly, check for wrong password.
+    GIVEN a User model instance
     
+    WHEN the password setter is used to set a plaintext password
+    
+    THEN the password should be hashed and stored privately 
+    AND attempting to access the plaintext password property should raise an AttributeError
+    AND returns True for correct password 
+    AND False for an incorrect password
     """
     # Setting password should hash it
     user.password = 'secret'
-    assert user.password_hash is not None
-    assert user.password_hash != 'secret'  # Ensure it’s hashed
+
+    # Access private attribute directly (name mangled)
+    assert user._User__password_hash is not None
+    assert user._User__password_hash != 'secret'  # Ensure it’s hashed
 
     # Trying to get password should raise AttributeError
     with pytest.raises(AttributeError, match="Password is write-only"):
@@ -120,6 +124,7 @@ def test_password_property_and_check(user):
     assert user.check_password('secret') is True
     # and False for wrong password
     assert user.check_password('wrong') is False
+
 
 
 def test_register_exception(client):
@@ -137,4 +142,4 @@ def test_register_exception(client):
         }, follow_redirects=True)
 
         # CHECK if the error flash message appears in the response
-        assert b"Something went wrong." in response.data
+        assert b"Something went wrong during registration." in response.data

@@ -135,8 +135,8 @@ Either way, we initialize our __CSRF protection__ in the app, the __database__, 
 
 We are using BootStrap for the styling, thats why we have that at script-src and style-src. We'll go into that later.
 
-Furthermore, the application has 2 templates for error handling, 404 and 505. Both of these routes are defined directly in the factory app because they have to be __global__ and work on any route, not only on a specific blueprint routes. For example, if i were to put those routes in __chat__ blueprint then only an error from the routes within the chat's routes will redirect correctly.
-I also added a __/simulate-505__ route in order to test the template as it is hard to manually simulate the error
+Furthermore, the application has 2 templates for error handling, 404 and 505. Both of these routes are defined directly in the factory app because they have to be **global** and work on any route, not only on a specific blueprint routes. For example, if i were to put those routes in **chat** blueprint then only an error from the routes within the chat's routes will redirect correctly.
+I also added a **/simulate-505** route in order to test the template as it is hard to manually simulate the error
 
 ```python
     # Custom error handler for 404 Not Found
@@ -186,41 +186,45 @@ This route handles the registration and inserting in the database new users. We 
 - GET: Renders the registration form.
 - POST: Processes registration data, checks for existing users, creates a new user, commits to the database, logs in the new user, and redirects to the chat home page.
 
-We use __Flash__ messages to indicate to the user wether the account has been created successfully if the user already exists in the db or if something went wrong.
+We use **Flash** messages to indicate to the user wether the account has been created successfully if the user already exists in the db or if something went wrong.
 The "something went wrong." indicates that there was an error when tried to add the user into the database. In such case, to add a new layer of keeping a safe database, we introduced a try block and if there was an error when trying to commit to database, we rollback the session.
 
 ```python
 @bp.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Get username and password
-        username = request.form.get("username")
-        password = request.form.get("password")
-        # Check if already exists
-        user = User.query.filter_by(username=username).first()
-
-        if user:
-            flash("User already exists.", "error")
-            return redirect(url_for("auth.register"))
-        
-        # Register user
         try:
-            new_user = User(username=username)
-            new_user.password = password
+            data = UserRegisterSchema(**request.form)
+        
+        except ValidationError as e:
+            for err in e.errors():
+                flash(err["msg"], "error")
+            return redirect(url_for("auth.register"))
+
+        # Check if user already exists
+        if User.find_by_username(data.username):
+            flash("User already exists.", "error")
+        
+        # Create new user
+        try:
+            new_user = User()
+            new_user.username = data.username
+            new_user.password = data.password
+
             db.session.add(new_user)
             db.session.commit()
-        
-            # Automatically log in user
-            login_user(new_user) # This adds user to the session
+
+            login_user(new_user)
             flash("Account created successfully", "success")
-            
+            return redirect(url_for("chat.home"))
+        
         except Exception as e:
             db.session.rollback()
-            flash("Something went wrong.", "error")
-
-        return redirect(url_for('chat.home'))
+            flash("Something went wrong during registration.", "error")
+            return redirect(url_for("auth.register"))
     
     return render_template("register.html")
+
 ```
 
 ##### /Login
@@ -241,12 +245,19 @@ def login():
         return redirect(url_for("chat.home"))
 
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        user = User.query.filter_by(username=username).first()
+        try:
+            # Validate input using Pydantic
+            data = UserLoginSchema(**request.form)
+        except ValidationError as e:
+            for err in e.errors():
+                flash(err["msg"], "error")
+            return redirect(url_for("auth.login"))
 
-        if user and user.check_password(password):
-            login_user(user) # This adds user to the session
+        # Check user credentials
+        user = User.find_by_username(data.username)
+        if user and user.check_password(data.password):
+            login_user(user)
+            flash("Logged in successfully", "success")
             return redirect(url_for("chat.home"))
         else:
             flash("Invalid username or password", "error")
@@ -316,33 +327,29 @@ Redirects back to the home page after processing.
 ```python
 @bp.route("/chat", methods=["POST"])
 def chat():
-    prompt = request.form["prompt"]
+    try:
+        data = ChatPromptSchema(**request.form)
+    except ValidationError as e:
+        for err in e.errors():
+            flash(err["msg"], "error")
+        return redirect(url_for("chat.home"))
 
-    if len(prompt) > 1000:  # Max lenght for the prompt
-        flash("Prompt too long.", "error")
-        return redirect(url_for("chat.home")) # index.html template
-    
-    if not prompt.strip(): # Ensures the user has wrote something before sending a prompt to the API
-        flash("Please enter a message", "error")
-        return redirect(url_for("chat.home")) 
-
-    try: # Using a try block in case any error happens the database won't get corrupted data.
+    try:
         # Get response from DeepSeek
-        answer = query_deepseek(prompt)
+        answer = query_deepseek(data.prompt)
 
-        # Save to database
-    
+        # Save chat
         new_chat = Chat(
-            user_id = current_user.id,
-            prompt=prompt,
-            response = answer,
+            user_id=current_user.id,
+            prompt=data.prompt,
+            response=answer,
         )
         db.session.add(new_chat)
         db.session.commit()
-    
-    except Exception as e:
-        db.session.rollback() # Rollback on error
-        flash("Something went wrong.", "error")
+
+    except Exception:
+        db.session.rollback()
+        flash("Something went wrong while saving the chat.", "error")
 
     return redirect(url_for("chat.home"))
 ```
@@ -379,6 +386,42 @@ Custom modules: models (__Chat__ model), utils (__query_deepseek__), db (__datab
 
 All chat data is stored and retrieved per user, ensuring privacy and separation of conversations.
 Error handling is implemented for database operations and prompt validation
+
+### schemas.py
+
+In here we hold the schemas which we use to validate the user's input with **pydantic**. We use those schemas to validate input type of constraints, injection via Type Enforcement -- combined with our SQLAlchemy's parameterized queries.
+
+```python
+class UserBaseSchema(BaseModel):
+    username: str = Field(..., min_length=3, max_length=80)
+    password: str = Field(..., max_length=128)
+
+    @field_validator("username", "password")
+    @classmethod
+    def not_empty(cls, value: str, info):
+        if not value.strip():
+            raise ValueError(f"{info.field_name.capitalize()} cannot be empty")
+        return value
+
+
+
+class UserRegisterSchema(UserBaseSchema):
+    pass
+
+
+class UserLoginSchema(UserBaseSchema):
+    pass
+
+class ChatPromptSchema(BaseModel):
+    prompt: str = Field(..., max_length=1000)
+
+    @field_validator("prompt")
+    @classmethod
+    def not_empty(cls, value: str):
+        if not value.strip():
+            raise ValueError("Prompt cannot be empty.")
+        return value
+```
 
 ### utils.py
 
@@ -485,13 +528,13 @@ Structure:
         505.html - Renders on internal server errors *Server Error*.
 
 Template inheritance:
-    - All templates extend __base.html__
+    - All templates extend **base.html**
 
 ```html
 {% extends "base.html" %}
 ```
 
-The __base.html__ contains shared *head*, Bootstrap CSS/JS and placeholder blocks like:
+The **base.html** contains shared *head*, Bootstrap CSS/JS and placeholder blocks like:
 
 ```html
 {% block title %}{% endblock %}
@@ -590,7 +633,7 @@ runner - function - Provides a CLI runner to test custom CLI commands.
 auth - function - Provides methods to register/login/logout test users.
 user - function - Creates a blank User model instance for custom setup.
 
-__app__ fixture:
+**app** fixture:
 
 ```python
 @pytest.fixture(scope='module')
@@ -622,7 +665,7 @@ def app():
     os.unlink(db_path)
 ```
 
-__client__ fixture:
+**client** fixture:
 
 ```python
 @pytest.fixture
@@ -638,7 +681,7 @@ def runner(app):
     return app.test_cli_runner()
 ```
 
-__AuthActions__ Class:
+**AuthActions** Class:
 
 ```python
 class AuthActions(object):
@@ -664,7 +707,7 @@ class AuthActions(object):
         return self._client.get('/logout')
 ```
 
-__auth__ and __user__ fixtures:
+**auth** and **user** fixtures:
 
 ```python
 @pytest.fixture
@@ -774,7 +817,7 @@ This test ensures that the Flask application loads configuration variables prope
 Scenario: Validate that the __create_app()__ factory loads settings from __config.py__ when no custom config is supplied.
 Checks:
     Configuration values are presend and match expected values
-    Verifies __RATELIMIT_DEFAULT__, __DEBUG__ and __WTF_CSRF_ENABLED__ settings are properly applied.
+    Verifies **RATELIMIT_DEFAULT**, __DEBUG__ and __WTF_CSRF_ENABLED__ settings are properly applied.
 
 Ensures app doesn't silently boot with missing or incorrect config.
 

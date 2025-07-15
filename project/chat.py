@@ -1,33 +1,33 @@
-
 """
 chat.py
-This module defines the chat blueprint for the Flask application, handling chat-related routes and logic.
+This module defines the chat blueprint for handling chat-related routes in the Flask application.
 Blueprints:
-    bp: Flask Blueprint instance for chat-related routes.
+    bp: Flask Blueprint for chat routes.
 Routes:
-    - "/" (GET): Home page for the chat interface.
+    - "/" (GET): Home page displaying the user's chat history.
         * Redirects to login if the user is not authenticated.
-        * Loads all chat messages for the current user from the database, ordered by timestamp.
-        * Renders the "index.html" template with the user's conversation history.
-    - "/chat" (POST): Handles submission of new chat prompts.
-        * Validates the prompt length and content.
-        * Calls the DeepSeek API to generate a response.
-        * Saves the prompt and response to the database, associated with the current user.
-        * Handles errors gracefully, rolling back the database session and flashing error messages as needed.
-        * Redirects back to the home page after processing.
-    - "/clear" (POST): Clears the chat history for the current user.
-        * Deletes all chat records for the current user from the database.
+        * Retrieves all chat messages for the current user, ordered by timestamp.
+        * Renders 'index.html' with the conversation history.
+    - "/chat" (POST): Handles chat prompt submissions.
+        * Validates the submitted prompt using ChatPromptSchema.
+        * If validation fails, flashes error messages and redirects to home.
+        * Queries DeepSeek for a response to the prompt.
+        * Saves the prompt and response as a new Chat entry in the database.
+        * Handles database errors by rolling back and flashing an error message.
+        * Redirects to home after processing.
+    - "/clear" (POST): Clears the user's chat history.
+        * Deletes all chat entries for the current user.
         * Commits the transaction and flashes a success message.
-        * Redirects back to the home page.
+        * Handles errors by rolling back and flashing an error message.
+        * Redirects to home after processing.
 Dependencies:
-    - Flask: For routing, rendering templates, handling requests, and flashing messages.
-    - Flask-Login: For user authentication and access to the current user.
-    - SQLAlchemy: For database interactions.
-    - Custom modules: models (Chat model), extensions (limiter), utils (query_deepseek), db (database instance).
-Notes:
-    - All chat data is stored and retrieved per user, ensuring privacy and separation of conversations.
-    - Error handling is implemented for database operations and prompt validation.
-    - The DeepSeek API is used to generate responses to user prompts.
+    - Flask (Blueprint, render_template, request, redirect, url_for, flash)
+    - flask_login (current_user)
+    - .models (Chat)
+    - .utils (query_deepseek)
+    - .db (db)
+    - pydantic (ValidationError)
+    - .schemas (ChatPromptSchema)
 """
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
@@ -35,7 +35,8 @@ from flask_login import current_user
 from .models import Chat  # Import after db is defined in models.py
 from .utils import query_deepseek
 from .db import db
-
+from pydantic import ValidationError
+from .schemas import ChatPromptSchema
 
 bp = Blueprint('chat', __name__)
 
@@ -45,54 +46,51 @@ bp = Blueprint('chat', __name__)
 def home():
     if not current_user.is_authenticated:
         return redirect(url_for("auth.login"))
-    
-    # Load chats by user id instead of session cookies.
+
     chats = Chat.query.filter_by(user_id=current_user.id).order_by(Chat.timestamp.asc()).all()
     conversation = [(chat.prompt, chat.response) for chat in chats]
-    
     return render_template("index.html", conversation=conversation)
 
 
 @bp.route("/chat", methods=["POST"])
 def chat():
-    prompt = request.form["prompt"]
-
-    if len(prompt) > 1000:
-        flash("Prompt too long.", "error")
-        return redirect(url_for("chat.home"))
-    
-    if not prompt.strip():
-        flash("Please enter a message", "error")
+    try:
+        data = ChatPromptSchema(**request.form)
+    except ValidationError as e:
+        for err in e.errors():
+            flash(err["msg"], "error")
         return redirect(url_for("chat.home"))
 
     try:
         # Get response from DeepSeek
-        answer = query_deepseek(prompt) # Custom function to query DeepSeek API from utils.py
+        answer = query_deepseek(data.prompt)
 
-        # Save to database
-    
+        # Save chat
         new_chat = Chat(
-            user_id = current_user.id,
-            prompt=prompt,
-            response = answer,
+            user_id=current_user.id,
+            prompt=data.prompt,
+            response=answer,
         )
         db.session.add(new_chat)
         db.session.commit()
-    
-    except Exception as e:
+
+    except Exception:
         db.session.rollback()
-        flash("Something went wrong.", "error")
+        flash("Something went wrong while saving the chat.", "error")
 
     return redirect(url_for("chat.home"))
 
 
-@bp.route("/clear", methods=['POST'])
+@bp.route("/clear", methods=["POST"])
 def clear_chat():
-    # Delete all chats for current user
-    Chat.query.filter_by(user_id=current_user.id).delete()
-    db.session.commit()
-    flash("Chat history cleared", "success")
-    
+    try:
+        Chat.query.filter_by(user_id=current_user.id).delete()
+        db.session.commit()
+        flash("Chat history cleared", "success")
+    except Exception:
+        db.session.rollback()
+        flash("Could not clear chat history", "error")
+
     return redirect(url_for("chat.home"))
 
 

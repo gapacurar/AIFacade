@@ -147,16 +147,57 @@ In code, this is expressed through two SQLAlchemy models. The User model defines
 ```python
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128)), nullable=False)
+    __username = db.Column("username", db.String(80), unique=True, nullable=False)
+    __password_hash = db.Column("password_hash", db.String(128)), nullable=False)
     chats = db.relationship('Chat', backref='user', lazy=True, cascade='all, delete-orphan')
 
+    @property
+    def username(self):
+        return self.__username
+    
+    @username.setter
+    def username(self, username):
+        if not username:
+            raise ValueError("Username cannot be empty")
+        self.__username = username
+
+     @property
+    def password(self):
+        raise AttributeError("Password is write-only")
+
+    @password.setter
+    def password(self, password):
+        self.__password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.__password_hash, password)
+
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.query.filter(cls._User__username == username).first()
+    
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    prompt = db.Column(db.Text, nullable=False)
-    response = db.Column(db.Text, nullable=False)
+    __prompt = db.Column("prompt", db.Text, nullable=False)
+    __response = db.Column("response", db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    @property
+    def prompt(self):
+        return self.__prompt
+    
+    @prompt.setter
+    def prompt(self, val):
+        self.__prompt = val
+
+    @property
+    def response(self):
+        return self.__response
+    
+    @response.setter
+    def response(self, val):
+        self.__response = val
 ```
 
 ---
@@ -167,9 +208,9 @@ Several architectural choices shape the stability and flexibility of AIFacade. T
 
 The UI is built with Bootstrap, prioritizing speed and simplicity over pixel-perfect design. As for security, HTTP headers like Content-Security-Policy and Referrer-Policy are automatically appended to every response, thanks to a centralized hook. These headers, silent but powerful, help protect users without requiring any intervention
 
-For the models we use Integer for id and user_id because SQLite map Integer to 32-bit or 64-bit auto-incrementing primary keys by default. SQLAlchemy does not have a separate Long type, if needed, database-level configuration or BitInteger can be used later without affecting app logic. Strings like username and password_hash use String(lenght) for efficient indexing and predictable storage size. Text fields for prompt, response use Text because they cna store arbitrarily long user-generated content, which is essential for chat interactions. Timestamps use DateTime with a default of datetime.now(timezone.utc) to ensure consistent, timezone-aware creation times for each chat. The password property is write-only, using a setter to securely hash passwords before storage via generate_password_hash() from Werkzeug and the check uses check_password_hash(). The User has a one-to-many relationship with Chat using db.relationship and cascade deletion ensures all chats are removed if a user is deleted. All attributes are public. ORM Mapping gets confused, SQLAlchemy maps class attributes to database columns, so for example if we protect an attribute like _username, in the database we will have to get the attribute by using user._username, which is not practical.
+For the models we use Integer for id and user_id because SQLite map Integer to 32-bit or 64-bit auto-incrementing primary keys by default. SQLAlchemy does not have a separate Long type, if needed, database-level configuration or BitInteger can be used later without affecting app logic. Strings like username and password_hash use String(lenght) for efficient indexing and predictable storage size. Text fields for prompt, response use Text because they can store arbitrarily long user-generated content, which is essential for chat interactions. Timestamps use DateTime with a default of datetime.now(timezone.utc) to ensure consistent, timezone-aware creation times for each chat. The password property is write-only, using a setter to securely hash passwords before storage via generate_password_hash() from Werkzeug and the check uses check_password_hash(). The User has a one-to-many relationship with Chat using db.relationship and cascade deletion ensures all chats are removed if a user is deleted. All attributes are 'private'. We use @property decorator combined with @x.setter in order to achieve some type of getter and setter logic for the attributes.
 
-We have several layers for security: All forms are protected with CSRF tokens via Flask-WTF. The application enforces strong HTTP headers including Content Security Policy, no-referrer settings, X-Frame-Options, and anti-sniffing rules. Users are limited to a maximum number of interactions per hour to mitigate abuse, enforced by Flask-Limiter. Session management is handled securely through Flask-Login.
+We have several layers for security: All forms are protected with CSRF tokens via Flask-WTF. The application enforces strong HTTP headers including Content Security Policy, no-referrer settings, X-Frame-Options, and anti-sniffing rules. Users are limited to a maximum number of interactions per hour to mitigate abuse, enforced by Flask-Limiter. Session management is handled securely through Flask-Login. We are also using Pydantic for user's input validation with designed schemas.
 
 ## 10. Future Enhancements
 

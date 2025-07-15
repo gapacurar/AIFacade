@@ -1,48 +1,49 @@
+"""
+auth.py
+This module defines authentication routes and logic for user registration, login, and logout
+using Flask, Flask-Login, and Pydantic for input validation.
+Blueprints:
+    bp (Blueprint): The authentication blueprint for registering auth-related routes.
+Functions:
+    load_user(user_id):
+        Flask-Login user loader callback. Loads a user from the database by user ID.
+    register():
+        Handles user registration.
+        - GET: Renders the registration form.
+        - POST: Validates input using Pydantic, checks for existing user, creates a new user,
+          logs them in, and redirects to the chat home page. Handles validation and database errors.
+    login():
+        Handles user login.
+        - GET: Renders the login form.
+        - POST: Validates input using Pydantic, checks credentials, logs in the user, and redirects
+          to the chat home page. Handles validation errors and incorrect credentials.
+    logout():
+        Logs out the current user and redirects to the login page.
+Dependencies:
+    - Flask
+    - Flask-Login
+    - Pydantic
+    - SQLAlchemy (for database session)
+    - Custom User model and schemas
+Templates:
+    - register.html: Registration form template.
+    - login.html: Login form template.
+Flash Messages:
+    - Used for displaying success, error, and info messages to the user.
+"""
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, LoginManager, current_user, logout_user
 from .models import User
 from .db import db
-
-"""
-auth.py
-This module defines authentication routes and logic for a Flask web application using Flask-Login.
-It provides user registration, login, and logout functionality, and integrates with a SQLAlchemy database.
-Blueprints:
-    bp (Blueprint): The authentication blueprint registered as 'auth'.
-Functions:
-    load_user(user_id):
-        Flask-Login user loader callback.
-        Retrieves a User object from the database by user_id for session management.
-    register():
-        Handles user registration via GET and POST requests.
-        - GET: Renders the registration form.
-        - POST: Processes registration data, checks for existing users, creates a new user,
-          commits to the database, logs in the new user, and redirects to the chat home page.
-        - On error, flashes an error message and redirects appropriately.
-    login():
-        Handles user login via GET and POST requests.
-        - GET: Renders the login form.
-        - POST: Authenticates the user by username and password, logs in the user if credentials are valid,
-          and redirects to the chat home page.
-        - If already authenticated, redirects to the chat home page.
-        - On failure, flashes an error message.
-    logout():
-        Logs out the current user, flashes a logout message, and redirects to the login page.
-Dependencies:
-    - Flask (Blueprint, render_template, request, flash, redirect, url_for)
-    - Flask-Login (login_user, LoginManager, current_user, logout_user)
-    - SQLAlchemy models and session management (User, db)
-Notes:
-    - Passwords should be securely hashed and checked using appropriate methods in the User model.
-    - Flash messages are used to provide feedback to the user.
-    - The 'chat.home' endpoint is assumed to be defined elsewhere in the application.
-"""
+from pydantic import ValidationError
+from .schemas import UserRegisterSchema, UserLoginSchema
 
 
 login_manager = LoginManager()
 bp = Blueprint('auth', __name__)
 
-# Add this user_loader function:
+# Load user by ID for session management
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
@@ -51,32 +52,35 @@ def load_user(user_id):
 @bp.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Get username and password
-        username = request.form.get("username")
-        password = request.form.get("password")
-        # Check if already exists
-        user = User.query.filter_by(username=username).first()
-
-        if user:
-            flash("User already exists.", "error")
-            return redirect(url_for("auth.register"))
-        
-        # Register user
         try:
-            new_user = User(username=username)
-            new_user.password = password
+            data = UserRegisterSchema(**request.form)
+        
+        except ValidationError as e:
+            for err in e.errors():
+                flash(err["msg"], "error")
+            return redirect(url_for("auth.register"))
+
+        # Check if user already exists
+        if User.find_by_username(data.username):
+            flash("User already exists.", "error")
+        
+        # Create new user
+        try:
+            new_user = User()
+            new_user.username = data.username
+            new_user.password = data.password
+
             db.session.add(new_user)
             db.session.commit()
-        
-            # Automatically log in user
+
             login_user(new_user)
             flash("Account created successfully", "success")
-            
+            return redirect(url_for("chat.home"))
+        
         except Exception as e:
             db.session.rollback()
-            flash("Something went wrong.", "error")
-
-        return redirect(url_for('chat.home'))
+            flash("Something went wrong during registration.", "error")
+            return redirect(url_for("auth.register"))
     
     return render_template("register.html")
 
@@ -87,12 +91,19 @@ def login():
         return redirect(url_for("chat.home"))
 
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        user = User.query.filter_by(username=username).first()
+        try:
+            # Validate input using Pydantic
+            data = UserLoginSchema(**request.form)
+        except ValidationError as e:
+            for err in e.errors():
+                flash(err["msg"], "error")
+            return redirect(url_for("auth.login"))
 
-        if user and user.check_password(password):
+        # Check user credentials
+        user = User.find_by_username(data.username)
+        if user and user.check_password(data.password):
             login_user(user)
+            flash("Logged in successfully", "success")
             return redirect(url_for("chat.home"))
         else:
             flash("Invalid username or password", "error")

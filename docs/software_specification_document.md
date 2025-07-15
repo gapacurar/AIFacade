@@ -78,7 +78,7 @@ The system includes graceful error handling. If a user navigates to a missing pa
 
 5.1 **Security**
 
-Security is a top priority. All forms are protected with CSRF tokens via Flask-WTF. The application enforces strong HTTP headers including Content Security Policy, no-referrer settings, X-Frame-Options, and anti-sniffing rules. Users are limited to a maximum number of interactions per hour to mitigate abuse, enforced by Flask-Limiter. Session management is handled securely through Flask-Login.
+Security is a top priority. All forms are protected with CSRF tokens via Flask-WTF. The application enforces strong HTTP headers including Content Security Policy, no-referrer settings, X-Frame-Options, and anti-sniffing rules. Users are limited to a maximum number of interactions per hour to mitigate abuse, enforced by Flask-Limiter. Session management is handled securely through Flask-Login. Input validation is offered via Pydantic using predefined schemas.
 
 5.2 **Reliability & Availability**
 

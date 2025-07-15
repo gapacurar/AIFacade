@@ -114,7 +114,7 @@ rm -rf ./instance/*
 2. Use
 
 ```bash
-docker compose down --rm web pytest tests/ -v
+docker compose run --rm web pytest tests/ -v
 ```
 
 ## 6. Security Maintenance
@@ -161,16 +161,16 @@ Issue     ->    Diagnosis   ->  Fix
 App not responding  ->  Check docker ps and docker logs web  ->  Restart containers
 
 --------------------------------------------------------------------------------------------
-Caddy shows 502 Bad Gateaway  ->  __web__ container may not be ready ->  Run __docker compose logs__
+Caddy shows 502 Bad Gateaway  ->  **web** container may not be ready ->  Run **docker compose logs**
 
 --------------------------------------------------------------------------------------------------;
 
-HTTPS not working   ->   Caddy TLS config issue  ->   Check __Caddyfile__, ensure domain is correct
+HTTPS not working   ->   Caddy TLS config issue  ->   Check **Caddyfile**, ensure domain is correct
 
 ----------------------------------------------------------------------------------------------------;
 
-Tests fail on GitHub CI  -> Check __pytest__ output in Actions logs  -> Fix test or broken app logic
+Tests fail on GitHub CI  -> Check **pytest** output in Actions logs  -> Fix test or broken app logic
 
 -----------------------------------------------------------------------------------------------------'
 
-Volume not persisting   ->  Check __docker-compose.yml__ volume paths   -> Make sure paths map correctly.
+Volume not persisting   ->  Check **docker-compose.yml** volume paths   -> Make sure paths map correctly.

@@ -7,7 +7,6 @@
 - **Authors:** Bicu Andrei Ovidiu
 - **Status:** Final
 
-
 ## Table of Contents
 
 1. Introduction
@@ -51,7 +50,7 @@ cd AIFacade
 
 Configure environment variables:
 
-Create a __.env__ file IF __it doesn't exist already__:
+Create a *.env* file IF *it doesn't exist already*:
 
 ```env
 SECRET_KEY = supersecretkey
@@ -120,7 +119,7 @@ Port in use?
 ```docker compose down```
 
 Volume not persisting?
-Ensure __instance/__ is mounted in __docker-compose.yml__
+Ensure **instance/** is mounted in **docker-compose.yml**
 
 ## 7. Backup
 
