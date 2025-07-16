@@ -4,10 +4,8 @@
 
 ## 1. Document Control
 
-__TO DO__: Update the document control fields. The date needs to be updated.
-
 - **Version:** 1.0
-- **Date:** 2025-06-30
+- **Date:** 2025-07-17
 - **Authors:** Bicu Andrei Ovidiu
 - **Status:** Final
 
@@ -74,8 +72,6 @@ Around this backbone are three essential service classes. AuthService manages ev
 - `User` with attributes `id`, `username`, `password_hash`.
 - `Chat` with attributes `id`, `user_id`, `prompt`, `response`, `timestamp`.
 - `AuthService`, `ChatService`, and `ApiClient` classes for business logic.
-
-**TO DO** All attributes of a class must be private for security reasons. In the class diagram, still exist public variables (marked with + and not -)
 
 5.2 **Package/Module Structure**
 
@@ -149,62 +145,108 @@ Beneath all abstractions lies a simple relational truth: each user can generate 
 In code, this is expressed through two SQLAlchemy models. The User model defines identities with uniqueness and password constraints, while the Chat model stores raw interactions alongside timestamps. A relationship link bridges them, making retrieval efficient and deletion safe. Timezones are accounted for, and timestamps are generated in UTC by default, ensuring future compatibility and auditing.
 
 ```python
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class User(UserMixin, db.Model):
+    __tablename__ = 'user'
+    
+    __id = db.Column("id", db.Integer, primary_key=True)
     __username = db.Column("username", db.String(80), unique=True, nullable=False)
-    __password_hash = db.Column("password_hash", db.String(128)), nullable=False)
-    chats = db.relationship('Chat', backref='user', lazy=True, cascade='all, delete-orphan')
+    __password_hash = db.Column("password", db.String(128), nullable=False)
+    __chats = db.relationship('Chat', backref='user', lazy=True, cascade='all, delete-orphan')
+    
+    @property
+    def id(self):
+        return self.__id
 
     @property
     def username(self):
         return self.__username
-    
+
     @username.setter
     def username(self, username):
         if not username:
             raise ValueError("Username cannot be empty")
         self.__username = username
 
-     @property
+    @property
     def password(self):
         raise AttributeError("Password is write-only")
 
     @password.setter
     def password(self, password):
+        if not password:
+            raise ValueError("Password cannot be empty")
         self.__password_hash = generate_password_hash(password)
-    
+
     def check_password(self, password):
         return check_password_hash(self.__password_hash, password)
+
+    @property
+    def chats(self):
+        return self.__chats
 
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter(cls._User__username == username).first()
-    
+
+
+
 class Chat(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    __tablename__ = 'chats'
+
+    __id = db.Column("id", db.Integer, primary_key=True)
+    __user_id = db.Column("user_id", db.Integer, db.ForeignKey('user.id'), nullable=False)
+    __timestamp = db.Column("timestamp", db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     __prompt = db.Column("prompt", db.Text, nullable=False)
     __response = db.Column("response", db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    @property
+    def id(self):
+        return self.__id
+
+    @hybrid_property
+    def user_id(self):
+        return self.__user_id
+
+    @user_id.expression
+    def user_id(cls):
+        return cls.__table__.c.user_id   
+
+    @user_id.setter
+    def user_id(self, value):
+        if not isinstance(value, int):
+            raise ValueError("user_id must be an integer")
+        self.__user_id = value
+
+    @hybrid_property
+    def timestamp(self):
+        # Return actual datetime value on instance
+        return self.__timestamp
+
+    @timestamp.expression
+    def timestamp(cls):
+        # Return column for query usage
+        return cls.__table__.c.timestamp
 
     @property
     def prompt(self):
         return self.__prompt
-    
+
     @prompt.setter
     def prompt(self, val):
+        if not val:
+            raise ValueError("Prompt cannot be empty")
         self.__prompt = val
 
     @property
     def response(self):
         return self.__response
-    
+
     @response.setter
     def response(self, val):
+        if not val:
+            raise ValueError("Response cannot be empty")
         self.__response = val
 ```
-
----
 
 ## 9. Design Decisions and Rationale
 

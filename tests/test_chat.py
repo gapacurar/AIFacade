@@ -104,4 +104,4 @@ def test_query_deepseek_exception_handling(client, auth):
     with patch("project.utils.requests.post", side_effect=Exception("Test exception")):
         response = client.post("/chat", data={"prompt": "trigger error"}, follow_redirects=True)
         assert response.status_code == 200
-        assert b"Error: Test exception" in response.data or b"Something went wrong." in response.data
+        assert b"Error: Test exception" in response.data or b"Something went wrong while saving the chat." in response.data

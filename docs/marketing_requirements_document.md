@@ -2,10 +2,8 @@
 
 ## Document Control
 
-**TO DO** Please update the Document Control (date).
-
 - **Version:** 1.0
-- **Date:** 2025-06-30
+- **Date:** 2025-07-17
 - **Authors:** Bicu Andrei Ovidiu
 - **Status:** Final
 
@@ -100,23 +98,23 @@ Sam is a student learning web development and AI integration. For him, the platf
 
 ## Glossary
 
-**TO DO** The glossary should be arranged to display each item clearly, along with its definition, rather than presenting an infinite list. A table format would be appreciated!
-
-Chatbot - A software application used to conduct an online conversation via text or text-to-speech, typically powered by AI.
-AI Model - An artificial intelligence system trained to perform tasks such as natural language processing, in this case, for generating chatbot responses.
-API (Application Programming Interface) - A set of rules and protocols for building and interacting with software applications, allowing external systems to communicate with the AI.
-Modular API Interface - A flexible and interchangeable API design that allows easy replacement or extension of the AI model.
-Docker - A platform for developing, shipping, and running applications using containerization, which ensures consistency across environments.
-Docker Compose - A tool used to define and run multi-container Docker applications using a YAML configuration file.
-Caddy Server - A modern, lightweight web server with automatic HTTPS support, used in this platform to serve the chatbot interface.
-Self-signed Certificates - SSL/TLS certificates generated locally rather than issued by a Certificate Authority, used primarily for development purposes.
-CSRF (Cross-Site Request Forgery) - A type of malicious exploit of a website where unauthorized commands are transmitted from a user that the web application trusts.
-Session Management - Techniques for maintaining state and authentication between the client and the server during interaction.
-Rate Limiting - A technique used to control the amount of incoming requests to prevent abuse or overuse of system resources.
-Markdown - A lightweight markup language used to format text, such as bold, lists, and headers, in AI responses.
-Open Source - Software with source code that anyone can inspect, modify, and enhance.
-SaaS (Software as a Service) - Software that is licensed on a subscription basis and is centrally hosted, typically not locally deployable.
-Test Coverage - A measure of how much of the codebase is exercised by automated tests.
-CI (Continuous Integration) - A development practice where developers integrate code into a shared repository frequently, each integration verified by automated builds and tests.
-HTTPS (HyperText Transfer Protocol Secure) - A protocol for secure communication over a computer network, often using TLS.
-Multi-tenant Support - A software architecture where a single instance serves multiple user groups or clients (tenants) with isolated data and configurations.
+| Term                  | Definition                                                                                                               |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------|
+| **Chatbot**           | A software application used to conduct an online conversation via text or text-to-speech, typically powered by AI.        |
+| **AI Model**          | An artificial intelligence system trained to perform tasks such as natural language processing, in this case, for generating chatbot responses. |
+| **API (Application Programming Interface)** | A set of rules and protocols for building and interacting with software applications, allowing external systems to communicate with the AI. |
+| **Modular API Interface** | A flexible and interchangeable API design that allows easy replacement or extension of the AI model.                    |
+| **Docker**            | A platform for developing, shipping, and running applications using containerization, which ensures consistency across environments. |
+| **Docker Compose**    | A tool used to define and run multi-container Docker applications using a YAML configuration file.                         |
+| **Caddy Server**      | A modern, lightweight web server with automatic HTTPS support, used in this platform to serve the chatbot interface.       |
+| **Self-signed Certificates** | SSL/TLS certificates generated locally rather than issued by a Certificate Authority, used primarily for development purposes. |
+| **CSRF (Cross-Site Request Forgery)** | A type of malicious exploit of a website where unauthorized commands are transmitted from a user that the web application trusts. |
+| **Session Management**| Techniques for maintaining state and authentication between the client and the server during interaction.                 |
+| **Rate Limiting**     | A technique used to control the amount of incoming requests to prevent abuse or overuse of system resources.              |
+| **Markdown**          | A lightweight markup language used to format text, such as bold, lists, and headers, in AI responses.                     |
+| **Open Source**       | Software with source code that anyone can inspect, modify, and enhance.                                                    |
+| **SaaS (Software as a Service)** | Software that is licensed on a subscription basis and is centrally hosted, typically not locally deployable.         |
+| **Test Coverage**     | A measure of how much of the codebase is exercised by automated tests.                                                    |
+| **CI (Continuous Integration)** | A development practice where developers integrate code into a shared repository frequently, each integration verified by automated builds and tests. |
+| **HTTPS (HyperText Transfer Protocol Secure)** | A protocol for secure communication over a computer network, often using TLS.                              |
+| **Multi-tenant Support** | A software architecture where a single instance serves multiple user groups or clients (tenants) with isolated data and configurations. |

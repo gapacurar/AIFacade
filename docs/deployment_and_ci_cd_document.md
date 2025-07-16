@@ -2,10 +2,8 @@
 
 ## Document Control
 
-**TO DO** Please update the status (date) of the document control.
-
 - **Version:** 1.0
-- **Date:** 2025-06-30
+- **Date:** 2025-07-17
 - **Authors:** Bicu Andrei Ovidiu
 - **Status:** Final
 
