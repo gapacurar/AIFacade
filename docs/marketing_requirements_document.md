@@ -2,6 +2,8 @@
 
 ## Document Control
 
+**TO DO** Please update the Document Control (date).
+
 - **Version:** 1.0
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -15,19 +17,19 @@ Our product is a secure, easy-to-use chatbot web application powered by an AI mo
 
 ## 2. Market Overview
 
-The current market for AI-powered chatbots is dominated by SaaS platforms and proprietary cloud services. While these offerings are rich in features, they often fail to address the needs of developers and teams looking for a lightweight, secure, and self-hosted alternative. Our solution caters specifically to that gap.
+The current market for AI-powered chatbots is dominated by SaaS platforms and proprietary cloud services. While these offerings are rich in features, they often fail to address the needs of developers and teams looking for a lightweight, secure, and self-hosted alternative. Our solution addresses that specific gap.
 
 ### 2.1 Target Market
 
-The primary targets are Developer and AI enthusiasts who want to experiment with chatbots APIs, small teams or startups seeking a lightweight, self-hosted chatbot platform, educational institutions or hobbyists learning secure web app development and users requiring local deployment without dependency on third-party SaaS.
+The primary targets are developers and AI enthusiasts who want to experiment with chatbot APIs, small teams or startups seeking a lightweight, self-hosted chatbot platform, educational institutions or hobbyists learning secure web app development, and users requiring local deployment without dependency on third-party SaaS.
 
 ### 2.2 Market Needs
 
-The market demands an intuitive registration and login system, secure data handling, dependable integration with modern AI APIs, and a robust yet simple setup process. Developers especially prefer open-source or containerized applications that can run locally or in development environments, with HTTPS enabled for security. These requirements are seldom fully addressed by existing solutions.
+The market demands an intuitive registration and login system, secure data handling, dependable integration with modern AI APIs, and a robust yet simple setup process. Developers, in particular, prefer open-source or containerized applications that can run locally or in development environments, with HTTPS enabled for enhanced security. These requirements are seldom fully addressed by existing solutions.
 
 ### 2.3 Competitor Analysis
 
-Most competitors are cloud-only and do not allow local data storage or user management. By contrast, this application stands apart through its unique combination of local hosting, strong security features, and full control over user data—all without sacrificing ease of use or extensibility.
+Most competitors are cloud-only and do not allow local data storage or user management. By contrast, this application stands out through its unique combination of local hosting, robust security features, and full control over user data, all without compromising ease of use or extensibility.
 
 ## 3. Product Description
 
@@ -35,7 +37,7 @@ The application offers a focused and secure environment for chatting with an AI 
 
 ### 3.1 Key Features
 
-Key capabilities include secure password storage with hashing, session management with hardened cookies, and protection against CSRF attacks. Users can submit prompts and access their individual chat histories, which are stored locally. The application supports Markdown rendering for AI responses, ensuring readability and formatting. Abuse is mitigated through rate limiting, and HTTPS is provided using a Dockerized Caddy server with self-signed certificates for development purposes. The architecture is modular, allowing developers to customize or extend the platform with ease. With nearly complete test coverage, the application emphasizes reliability and robustness.
+Key capabilities include secure password storage with hashing, session management with hardened cookies, and protection against CSRF attacks. Users can submit prompts and access their individual chat histories, which are stored locally on their device. The application supports Markdown rendering for AI responses, ensuring readability and formatting. Abuse is mitigated through rate limiting, and HTTPS is provided using a Dockerized Caddy server with self-signed certificates for development purposes. The architecture is modular, allowing developers to easily customize or extend the platform. With nearly complete test coverage, the application emphasizes reliability and robustness.
 
 ### 3.2 Benefits
 
@@ -53,11 +55,11 @@ The platform is available free of charge under an open-source license, and while
 
 ### 4.3 Promotion & Distribution
 
-Promotion will focus on outreach to developer-centric communities such as Reddit, Hacker News, and Dev.to. Blog content will highlight setup instructions, use cases, and security principles. The application will live on GitHub, with Docker images hosted on Docker Hub for instant deployment via Docker Compose. Tutorials and walkthroughs will support onboarding and community involvement will be encouraged through issue tracking and pull requests.
+Promotion will focus on outreach to developer-centric communities such as Reddit, Hacker News, and Dev.to. Blog content will highlight setup instructions, use cases, and security principles. The application will live on GitHub, with Docker images hosted on Docker Hub for instant deployment via Docker Compose. Tutorials and walkthroughs will support onboarding, and community involvement will be encouraged through issue tracking and pull requests.
 
 - Share on developer forums (Reddit, Hacker News, Dev.to).
 - Publish blog posts demonstrating setup and use cases.
-- Offer GitHub repository with detailed documentation and tutorials.
+- Offer a GitHub repository with detailed documentation and tutorials.
 - Engage in community-driven improvements.
 
 ## 5. Requirements & Constraints
@@ -82,7 +84,7 @@ In addition, the platform will be continuously monitored for test coverage and c
 
 ## 7. Future Opportunities
 
-Looking forward, several enhancements are already envisioned. Production-ready deployment guides, including instructions for configuring trusted HTTPS certificates, will help transition from development to real-world use. Multi-tenant support and administrative dashboards could expand the platform’s scope for team-based use cases. Additional security measures such as input sanitization and prompt filtering are planned to further reinforce the system.
+Looking forward, several enhancements are already envisioned. Production-ready deployment guides, including instructions for configuring trusted HTTPS certificates, will help transition from development to real-world use. Multi-tenant support and administrative dashboards could expand the platform’s scope for team-based use cases. Additional security measures, such as input sanitization and prompt filtering, are planned to further reinforce the system.
 
 Eventually, the possibility of offering a hosted SaaS version, aimed at users without technical backgrounds, may bring the platform to an even broader audience.
 
@@ -98,6 +100,8 @@ Sam is a student learning web development and AI integration. For him, the platf
 
 ## Glossary
 
+**TO DO** The glossary should be arranged to display each item clearly, along with its definition, rather than presenting an infinite list. A table format would be appreciated!
+
 Chatbot - A software application used to conduct an online conversation via text or text-to-speech, typically powered by AI.
 AI Model - An artificial intelligence system trained to perform tasks such as natural language processing, in this case, for generating chatbot responses.
 API (Application Programming Interface) - A set of rules and protocols for building and interacting with software applications, allowing external systems to communicate with the AI.
@@ -109,8 +113,8 @@ Self-signed Certificates - SSL/TLS certificates generated locally rather than is
 CSRF (Cross-Site Request Forgery) - A type of malicious exploit of a website where unauthorized commands are transmitted from a user that the web application trusts.
 Session Management - Techniques for maintaining state and authentication between the client and the server during interaction.
 Rate Limiting - A technique used to control the amount of incoming requests to prevent abuse or overuse of system resources.
-Markdown - A lightweight markup language used to format text, such as bold, list, and headers, in AI reponses.
-Open Source - Software with source code that anyone can inspect, modify, and enchance.
+Markdown - A lightweight markup language used to format text, such as bold, lists, and headers, in AI responses.
+Open Source - Software with source code that anyone can inspect, modify, and enhance.
 SaaS (Software as a Service) - Software that is licensed on a subscription basis and is centrally hosted, typically not locally deployable.
 Test Coverage - A measure of how much of the codebase is exercised by automated tests.
 CI (Continuous Integration) - A development practice where developers integrate code into a shared repository frequently, each integration verified by automated builds and tests.
