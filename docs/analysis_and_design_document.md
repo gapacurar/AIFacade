@@ -33,8 +33,6 @@ Users can also clear their chat history entirely, which removes not just the mes
 
 3.2 **Non-Functional Requirements**
 
-Behind the scenes, several essential guarantees shape the experience. Security measures, such as CSRF tokens and strict HTTP headers, protect every form submission and interaction. To prevent abuse and ensure fair usage, the system applies rate limits to prompt submissions. The UI, while optimized for desktop experiences, is built using Bootstrap to allow some measure of responsiveness. Throughout the codebase, design decisions prioritize maintainability, as evidenced by the clean separation of modules and a testing regime that aims for near-complete coverage.
-
 At its core, AIFacade is built around the needs of any authorized and authenticated user interacting with an AI system. Behind the scenes, several essential guarantees shape the experience. Security measures such as CSRF tokens and strict HTTP headers protect every form submission and interaction. To combat classical security threats like SQL injection, the system implements parameterized queries and input validation to ensure data integrity and prevent unauthorized access. Additionally, to avoid abuse and maintain fair usage, the system applies rate limits on prompt submissions. The UI, while optimized for desktop experiences, is built using Bootstrap to allow some measure of responsiveness. Throughout the codebase, design decisions prioritize maintainability, as evidenced by the clean separation of modules and a testing regime that aims for near-complete coverage.
 
 ## 4. System Overview
