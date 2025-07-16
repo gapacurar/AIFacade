@@ -2,6 +2,8 @@
 
 ## Document Control
 
+**TO DO** Please update the status of Document Control (date).
+
 - **Version:** 1.0
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -10,7 +12,7 @@
 
 ## Overview
 
-This document provides guidelines for maintaining the Flask web application deployed via Docker, Gunicorn and Caddy. It includes instructions for updates, logging, monitoring, dependency management and common troubleshooting procedures.
+This document provides guidelines for maintaining the Flask web application deployed via Docker, Gunicorn, and Caddy. It includes instructions for updates, logging, monitoring, dependency management,t and common troubleshooting procedures.
 
 ## 1. Application Updates
 
@@ -74,7 +76,7 @@ Navigate to your repo -> "Actions" tab -> Select latest run -> Check step-by-ste
 
 Test app with:
 
-With self signed certs.
+With self-signed certs.
 
 ```powershell
 curl.exe -k https://localhost
@@ -90,7 +92,7 @@ curl https://localhost
 
 Or browser: __<https://localhost>__
 
-### Optional Enchancements
+### Optional Enhancements
 
 Add monitoring like __Prometheus__, __Grafana__ or Flask extensions (e.g., __Flask-Healthz__)
 
@@ -132,7 +134,7 @@ Regenerate environment secrets periodically and rotate any hardcoded tokens or p
 
 ### For SQLite
 
-Backup the __instance/__ folder regularly.
+Back up the __instance/__ folder regularly.
 
 ```powershell
 $date = Get-Date -Format "yyyy-MM-dd"
