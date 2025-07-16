@@ -2,6 +2,8 @@
 
 ## Document Control
 
+**TO DO** Please update the Document Control status (date).
+
 - **Version:** 1.0
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -13,13 +15,13 @@ This document will take you through the whole application's infrastructure. This
 
 ## 1. QuickStart
 
-For more informations about the basic stuff visit [User Guide](user_guide.md)
+For more information about the basic stuff, visit [User Guide](user_guide.md)
 
 ## 2. Database
 
 ### Models
 
-For the database we are using SQLite as a local database via Flask_SQLAlchemy. The models we are defining are __User__ and __Chat__.
+For the database, we are using SQLite as a local database via Flask_SQLAlchemy. The models we are defining are __User__ and __Chat__.
 
 ```python
 class User(UserMixin, db.Model):
@@ -55,18 +57,18 @@ class Chat(db.Model):
     response = db.Column(db.Text, nullable=False)
 ```
 
-The __chat__ model is also pretty straight forward. We collect the prompt the user inserted and we retrieve the response from the api while linking via FK the user_id to the id of the User model. Timestamp is automatically.
-I chose this way of storing the responses because its easier to maintain the history of each individual user and because the session cookies flask provided are not good enough when it comes to different users logging from the same device.
+The __chat__ model is also pretty straightforward. We collect the prompt the user inserted, and we retrieve the response from the api while linking via FK the user_id to the id of the User model. Timestamp is automatically.
+I chose this way of storing the responses because it's easier to maintain the history of each individual user and because the session cookies Flask provided are not good enough when it comes to different users logging in from the same device.
 
 ### db.py
 
-For the db we use the normal SQLAlchemy class from Flask-SQLAlchemy. It's easy to implement and easy to maintain.
-In this file we mostly created the CLI commands for the database with @click.command and @with_appcontext from built-in modules and flask.cli.
+For the DB, we use the normal SQLAlchemy class from Flask-SQLAlchemy. It's easy to implement and easy to maintain.
+In this file, we mostly created the CLI commands for the database with @click.command and @with_appcontext from built-in modules and flask.cli.
 The commands we defined are:
 
 1. init-db: We create the initial database and instance/ directory if they don't already exist.
 2. delete-tables: We delete all the tables of the database.
-3. reset-tables: We delete all the tables, including *alembic_version* if exists then we recreate all the tables.
+3. reset-tables: We delete all the tables, including *alembic_version* if it exists, then we recreate all the tables.
 
 Finally, the init_app() function adds all the commands so they can be called through the app.
 
@@ -85,11 +87,11 @@ Your database has been created.
 ## The Application
 
 Now that we talked about what are our models, which type of persistent database we have and what are our integrated CLI commands, it's time to talk about the architecture of the application.
-I used a __factory pattern__ in order to create the application using flask's __Blueprint__ class to separate core features and to not get any errors due to circular importing. The main app sits in the __init.py__ file inside the project. The blueprints used are: 1. __chat.py__. 2. __auth.py__.
+I used a __factory pattern__ in order to create the application using Flask's __Blueprint__ class to separate core features and to avoid getting any errors due to circular importing. The main app sits in the __init.py__ file inside the project. The blueprints used are: 1. __chat.py__. 2. __auth.py__.
 
 ### __init__.py
 
-In this file we have the factory which we use in order to create the app. We are using a __config.py__ file in order to import preset configuration into the application. Before running the application we also check which config to use, either a __test config__ from __root directory/tests/conftest.py__ or the normal configuration from the __config.py__
+In this file, we have the factory, which we use in order to create the app. We are using a __config.py__ file in order to import the preset configuration into the application. Before running the application, we also check which config to use, either a __test config__ from __root directory/tests/conftest.py__ or the normal configuration from the __config.py__
 
 ```python
 
@@ -101,7 +103,7 @@ In this file we have the factory which we use in order to create the app. We are
         app.config.update(test_config)
 ```
 
-Either way, we initialize our __CSRF protection__ in the app, the __database__, the __login manager__ which handles the user sessions, we set a __session protection__ to *strong* so even if the cookies are stolen any hijack will fail and we also initialize our __limiter__ to limit the requests you can make for a certain amount of time. I also added __CSP protection__ to mitigate XSS and data injection attacks. I implemented CSP via the Flask's @after_request decorator.
+Either way, we initialize our __CSRF protection__ in the app, the __database__, the __login manager__ which handles the user sessions, we set a __session protection__ to *strong* so even if the cookies are stolen any hijack will fail and we also initialize our __limiter__ to limit the requests you can make for a certain amount of time. I also added __CSP protection__ to mitigate XSS and data injection attacks. I implemented CSP via Flask's @after_request decorator.
 
 ```python
 # Initialize Flask extensions with the app
@@ -133,10 +135,10 @@ Either way, we initialize our __CSRF protection__ in the app, the __database__, 
         return response
 ```
 
-We are using BootStrap for the styling, thats why we have that at script-src and style-src. We'll go into that later.
+We are using Bootstrap for the styling, that's why we have that at script-src and style-src. We'll go into that later.
 
-Furthermore, the application has 2 templates for error handling, 404 and 505. Both of these routes are defined directly in the factory app because they have to be **global** and work on any route, not only on a specific blueprint routes. For example, if i were to put those routes in **chat** blueprint then only an error from the routes within the chat's routes will redirect correctly.
-I also added a **/simulate-505** route in order to test the template as it is hard to manually simulate the error
+Furthermore, the application has two templates for error handling, 404 and 505. Both of these routes are defined directly in the factory app because they have to be **global** and work on any route, not only on a specific blueprint route. For example, if i were to put those routes in **chat** blueprint then only an error from the routes within the chat's routes will redirect correctly.
+I also added a **/simulate-505** route in order to test the template, as it is hard to manually simulate the error
 
 ```python
     # Custom error handler for 404 Not Found
@@ -157,7 +159,7 @@ I also added a **/simulate-505** route in order to test the template as it is ha
         abort(505)
 ```
 
-And in the end in our __create_app()__ function, where all of this logic lives, we just return the app object
+And in the end, in our __create_app()__ function, where all of this logic lives, we just return the app object
 
 ### Blueprints
 
@@ -169,7 +171,7 @@ This blueprint handles all the authentication routes within the application. It 
 2. /register
 3. /logout
 
-In here we also define our LoginManager() class to manage our sessions.
+In here, we also define our LoginManager() class to manage our sessions.
 
 ```python
 login_manager = LoginManager()
@@ -181,13 +183,13 @@ def load_user(user_id):
 
 ##### /Register
 
-This route handles the registration and inserting in the database new users. We have 2 methods for this route: POST, GET.
+This route handles the registration and inserts new users into the database. We have 2 methods for this route: POST, GET.
 
 - GET: Renders the registration form.
 - POST: Processes registration data, checks for existing users, creates a new user, commits to the database, logs in the new user, and redirects to the chat home page.
 
-We use **Flash** messages to indicate to the user wether the account has been created successfully if the user already exists in the db or if something went wrong.
-The "something went wrong." indicates that there was an error when tried to add the user into the database. In such case, to add a new layer of keeping a safe database, we introduced a try block and if there was an error when trying to commit to database, we rollback the session.
+We use **Flash** messages to indicate to the user whether the account has been created successfully, if the user already exists in the database, or if something went wrong.
+The "something went wrong" indicates that there was an error when trying to add the user to the database. In such a case, to add a new layer of keeping a safe database, we introduced a try block, and if there was an error when trying to commit to the database, we rolled back the session.
 
 ```python
 @bp.route("/register", methods=['GET', 'POST'])
@@ -234,9 +236,9 @@ Handles user login via GET and POST requests.
         - POST: Authenticates the user by username and password, logs in the user if credentials are valid,
           and redirects to the chat home page.
         - If already authenticated, redirects to the chat home page.
-        - On failure, flashes an error message.
+        - On failure, it flashes an error message.
 
-Passwords are hashed in the db as stated before so in order to check the password we use the User's method *check_password*. This is done via werkzeug_security __check_password_hash__.
+Passwords are hashed in the db as stated before, so in order to check the password, we use the User's method *check_password*. This is done via werkzeug_security __check_password_hash__.
 
 ```python
 @bp.route("/login", methods=["GET", "POST"])
@@ -267,7 +269,7 @@ def login():
 
 ##### /Logout
 
-Logs out the current user, flashes a logout message and redirects to the login page.
+Logs out the current user, flashes a logout message, and redirects to the login page.
 
 ```python
 @bp.route("/logout")
@@ -281,7 +283,7 @@ def logout():
 
 1. Flask: Blueprint, render_template, request, flash, redirect, url_for
 2. Flask-Login: login_user, LoginManager, current_user, logout_user
-3. SQLAlchemy model and session management from own modules db and models.
+3. SQLAlchemy model and session management from own modules, db, and models.
 
 ##### Notes
 
@@ -377,7 +379,7 @@ Relies on index.html template.
 
 ##### Chat Blueprint Dependencies
 
-Flask: For routing, rendering templates, handling requests and flashing messages.
+Flask: For routing, rendering templates, handling requests, and flashing messages.
 Flask-Login: For user authentication and access to the current user.
 Flask-SQLAlchemy: For database interactions.
 Custom modules: models (__Chat__ model), utils (__query_deepseek__), db (__database instance__).
@@ -458,7 +460,7 @@ Sends a prompt to the DeepSeek chat completion API and returns the response as H
     Parameters:
         prompt (str): The user's input or question to be sent to the DeepSeek API.
     Returns:
-        str: The API's response rendered as HTML from Markdown if successful,
+        str: The API's response is rendered as HTML from Markdown if successful,
              or an error message string if the request fails.
     Raises:
         Exception: Catches and returns any exceptions that occur during the API request.
@@ -476,7 +478,7 @@ Markdown2: markdown
 
 ### config.py
 
-Currently holds only the main Config but it can be scaled to hold more, such as "Test config" or "Production Config" depending on your needs.
+Currently holds only the main Config, but it can be scaled to hold more, such as "Test config" or "Production Config", depending on your needs.
 This module loads environment variables using python-dotenv.
 Config: Central configuration class for Flask application settings.
 
