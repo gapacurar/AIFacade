@@ -1,17 +1,13 @@
-This Python web application is not ready.
 
-Your final practical exam will involve completing and fine-tuning it according to the specifications.
 
-Also, you'll need to create specific documentation related to this Python web application:
+Here is the AIFacade-specific documentation related to this Python web application:
 
-1. The complete Marketing requirements document.
-2. The Software Specification Document.
-3. The Analysis and Design document. Associated UML diagrams will also be created and referenced in the ADD document.
-4. The last successful testing report.
-5. The Deployment Document. The CI/CD document should be included.
-6. The maintenance document.
-
-Here are the missing specifications (these should also be included in the documentation):
+1. The complete Marketing requirements document. **TO DO** add internal reference/link to the document
+2. The Software Specification Document. **TO DO** add internal reference/link to the document
+3. The Analysis and Design document. Associated UML diagrams will also be created and referenced in the ADD document. **TO DO** add internal reference/link to the document
+4. The last successful testing report. **TO DO** add internal reference/link to the document
+5. The Deployment Document. The CI/CD document should be included. **TO DO** add internal reference/link to the document
+6. The maintenance document. **TO DO** add internal reference/link to the document
 
 The complete production-ready setup with Docker, Gunicorn, and pytest integration, building on the previous enhancements:
 
