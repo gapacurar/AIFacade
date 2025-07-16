@@ -4,6 +4,8 @@
 
 ## 1. Document Control
 
+**TO DO** Please update the status of Document Control (date).
+
 - **Version:** 1.2
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -41,7 +43,7 @@ At its core, the AIFacade Application is built using a modular Flask structure t
 
 - **Not production-ready:**
 
- It’s important to note that the system, in its current state, is not intended for public-facing or production use. Self-signed certificates, the lack of distributed database support, absence of load balancing, and no defined orchestration or automated recovery mechanisms make it more appropriate for local and test deployments.
+ It’s important to note that the system, in its current state, is not intended for public-facing or production use. Self-signed certificates, the lack of distributed database support, the absence of load balancing, and no defined orchestration or automated recovery mechanisms make it more appropriate for local and test deployments.
 
 3.2 **User Classes & Characteristics**
 
@@ -49,7 +51,7 @@ There are two primary user types. The end user can register an account, log in, 
 
 | User Type      | Characteristics                                                     |
 | -------------- | ------------------------------------------------------------------- |
-| End User       | Registers, logs in, submits prompts, views and clears chat history. |
+| End User       | Registers, logs in, submits prompts, views, and clears chat history. |
 | Admin (future) | Manages users and system health; out of scope for v1.               |
 
 3.3 **Operating Environment**
@@ -64,7 +66,7 @@ Several technologies and constraints define the system boundaries. Flask and its
 
 4.1 **Authentication & Authorization**
 
-Users begin with registering with a unique username and password. Their credentials are securely hashed before storage, plaintext passwords are never stored. We use session protection for secure login and logout logic. After logging in, they are redirected to the chat interface where they can submit prompts
+Users begin by registering with a unique username and password. Their credentials are securely hashed before storage, and plaintext passwords are never stored. We use session protection for secure login and logout logic. After logging in, they are redirected to the chat interface, where they can submit prompts
 
 4.2 **Chat Interface**
 
