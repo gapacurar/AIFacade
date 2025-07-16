@@ -2,6 +2,8 @@
 
 ## Document Control
 
+**TO DO** Please update the status (date) of the document control.
+
 - **Version:** 1.0
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -9,7 +11,7 @@
 
 ## 1. Overview
 
-This document describes the steps and technologies used to deploy and manage the AIFacade application across environments. It includes local Docker usage, container orchestration and continuous integration/deployment via GitHub Actions.
+This document describes the steps and technologies used to deploy and manage the AIFacade application across environments. It includes local Docker usage, container orchestration, and continuous integration/deployment via GitHub Actions.
 
 ## 2. Deployment Architecture
 
@@ -18,7 +20,7 @@ User → Caddy (TLS termination) → Gunicorn (WSGI HTTP server) → Flask App (
                                          SQLite (Local DB)
 
 __Web server__: Caddy handles HTTPS (self-signed for dev).
-__App server__: Gunicorn runs Flask inside Docker container.
+__App server__: Gunicorn runs Flask inside a Docker container.
 __DB__: SQLite stored persistently via instance/ volume.
 
 ![Deployment Diagram](deployment_diagram.jpg)
