@@ -2,6 +2,8 @@
 
 ## Document Control
 
+**TO DO** Please update the Document Control (Date).
+
 - **Version:** 1.0
 - **Date:** 2025-06-30
 - **Authors:** Bicu Andrei Ovidiu
@@ -21,7 +23,7 @@
 
 ## 1. Introduction
 
-This guide explains how to install, run and use the Flask-based web application deployed with Docker and reverse-proxied via Caddy. The app supports automatic testing via GitHub Actions and is structured for production use with Gunicorn.
+This guide explains how to install, run, and use the Flask-based web application deployed with Docker and reverse-proxied via Caddy. The app supports automatic testing via GitHub Actions and is structured for production use with Gunicorn.
 
 ## 2.1 Prerequisites
 
@@ -41,7 +43,7 @@ git clone --branch final-exam https://github.com/your-username/AIFacade.git
 cd AIFacade
 ```
 
-If this will move to main then:
+If this moves to the main, then:
 
 ```sh
 git clone https://github.com/your-username/AIFacade.git
@@ -65,7 +67,7 @@ Configure the database using CLI commands if there is no __instance/users.db__ i
 flask --app project init-db
 ```
 
-This will create the __instance__ directory and the database alongside with the tables needed.
+This will create the __instance__ directory and the database alongside the tables needed.
 
 ## 3. Running the Application
 
