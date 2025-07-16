@@ -94,7 +94,7 @@ The interface is designed primarily for desktop use, using Bootstrap for layout.
 
 5.5 **Maintainability**
 
-The codebase is modular and easy to understand, leveraging Blueprints to separate authentication and chat functionalities. A high standard for test coverage (99% and above) ensures changes can be made confidently with minimal risk of regression.
+The codebase is modular and easy to understand, leveraging Blueprints to separate authentication and chat functionalities. A high standard for test coverage (95% and above) ensures changes can be made confidently with minimal risk of regression.
 
 ## 6. System Architecture
 

@@ -1,13 +1,22 @@
+# Here is the AIFacade-specific documentation related to this Python web application
 
+1. The complete Marketing requirements document.
+[Marketing Requirements Document](docs/marketing_requirements_document.md)
 
-Here is the AIFacade-specific documentation related to this Python web application:
+2. The Software Specification Document.
+[Software Specification Document](docs/software_specification_document.md)
 
-1. The complete Marketing requirements document. **TO DO** add internal reference/link to the document
-2. The Software Specification Document. **TO DO** add internal reference/link to the document
-3. The Analysis and Design document. Associated UML diagrams will also be created and referenced in the ADD document. **TO DO** add internal reference/link to the document
-4. The last successful testing report. **TO DO** add internal reference/link to the document
-5. The Deployment Document. The CI/CD document should be included. **TO DO** add internal reference/link to the document
-6. The maintenance document. **TO DO** add internal reference/link to the document
+3. The Analysis and Design document. Associated UML diagrams are referenced in the ADD document.
+[Analysis and Design Document](docs/analysis_and_design_document.md)
+
+4. The last successful testing report.
+[Last Test Report Local](docs/tests/htmlcov/)
+
+5. The Deployment Document. The CI/CD document should be included.
+[Deployment and CI/CD Document](docs/deployment_and_ci_cd_document.md)
+
+6. The maintenance document.
+[Maintenance Document](docs/maintenance_document.md)
 
 The complete production-ready setup with Docker, Gunicorn, and pytest integration, building on the previous enhancements:
 
