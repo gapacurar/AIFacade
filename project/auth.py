@@ -42,13 +42,13 @@ Flash Messages:
     - Used for displaying success, error, and info messages to the user.
 """
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, LoginManager, current_user, logout_user
-from .models import User
-from .db import db
-from pydantic import ValidationError
-from .schemas import UserRegisterSchema, UserLoginSchema
-
+# Imports
+from flask import Blueprint, render_template, request, flash, redirect, url_for  # Flask core modules for routing, templates, and messaging
+from flask_login import login_user, LoginManager, current_user, logout_user      # Flask-Login for session management
+from .models import User                                                         # Custom User model for database operations
+from .db import db                                                               # SQLAlchemy database instance
+from pydantic import ValidationError                                             # Pydantic for input validation
+from .schemas import UserRegisterSchema, UserLoginSchema                         # Pydantic schemas for registration and login validation
 
 login_manager = LoginManager()
 bp = Blueprint('auth', __name__)
