@@ -21,7 +21,7 @@ Classes:
             not_empty: Ensures that the prompt field is not empty or whitespace.
 """
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator # BaseModel: Pydantic base class for data validation
 
 class UserBaseSchema(BaseModel):
     username: str = Field(..., min_length=3, max_length=80)

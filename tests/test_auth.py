@@ -1,6 +1,7 @@
-from flask_login import current_user
-from unittest.mock import patch
-import pytest
+from flask_login import current_user #
+from unittest.mock import patch # patch: Used to mock objects during testing
+import pytest # pytest: Testing framework used for fixtures and test discovery
+
 
 def test_register_user(client):
     """

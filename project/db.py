@@ -30,11 +30,19 @@ Example:
 """
 
 from flask_sqlalchemy import SQLAlchemy
+# SQLAlchemy: Provides ORM capabilities for database operations in Flask
+
 from sqlalchemy import text
+# text: Allows execution of raw SQL statements (used for dropping alembic_version table)
+
 import click
+# click: Used to create command-line interface (CLI) commands for Flask
+
 from flask.cli import with_appcontext
+# with_appcontext: Ensures CLI commands run within the Flask application context
 
 db = SQLAlchemy()
+# db: SQLAlchemy database instance used throughout the app for ORM operations
 
 
 @click.command("init-db")

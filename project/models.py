@@ -30,10 +30,20 @@ Notes:
     - Relationships are set up with cascading deletes for user chats.
 """
 from .db import db
+# db: SQLAlchemy database instance used for ORM model definitions
+
 from werkzeug.security import generate_password_hash, check_password_hash
+# generate_password_hash: Used to securely hash user passwords before storing them
+# check_password_hash: Used to verify a password against its stored hash
+
 from flask_login import UserMixin
+# UserMixin: Provides default implementations for Flask-Login user authentication methods
+
 from datetime import datetime, timezone
+# datetime, timezone: Used for timestamping chat messages in UTC
+
 from sqlalchemy.ext.hybrid import hybrid_property
+# hybrid_property: Allows properties to be used at both instance and class/query level in SQLAlchemy
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'

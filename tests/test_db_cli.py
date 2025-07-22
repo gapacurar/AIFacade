@@ -1,5 +1,5 @@
-from sqlalchemy import inspect
-from project.db import db
+from sqlalchemy import inspect # inspect: SQLAlchemy utility to introspect database schema
+from project.db import db # db: SQLAlchemy database instance for ORM operations
 
 def test_clear_db_command(runner, app):
     """

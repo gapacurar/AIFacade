@@ -17,9 +17,9 @@ query_deepseek(prompt):
         - Uses the 'markdown2' library to convert Markdown responses to HTML.
         - Handles API errors gracefully and provides informative error messages.
 """
-from markdown2 import markdown
-import requests
-from flask import current_app
+from markdown2 import markdown # markdown2: Library for converting Markdown text to HTML
+import requests # requests: Library for making HTTP requests to the DeepSeek API
+from flask import current_app # current_app: Flask's proxy for the current application context, used to access configuration variables
 
 
 def query_deepseek(prompt):

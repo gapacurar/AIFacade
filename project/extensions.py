@@ -1,4 +1,3 @@
-
 """
 This module initializes and configures the Flask-Limiter extension for rate limiting in a Flask application.
 Attributes:
@@ -9,10 +8,10 @@ Example:
     app = Flask(__name__)
     limiter.init_app(app)
 """
-from flask_limiter.util import get_remote_address
-from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address  # get_remote_address: Retrieves the client's IP address for rate limiting purposes
+from flask_limiter import Limiter  # Limiter: Flask-Limiter extension class for enabling rate limiting in the app
 
 
 limiter = Limiter(
     key_func=get_remote_address,
-)
+)  # limiter: Limiter instance configured to use the client's remote address as the rate limit

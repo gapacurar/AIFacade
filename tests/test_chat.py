@@ -1,6 +1,6 @@
-import pytest
-from flask_login import current_user
-from unittest.mock import patch
+import pytest # pytest: Testing framework used for fixtures and test discovery
+from flask_login import current_user  # current_user: Flask-Login's proxy for the currently logged-in user
+from unittest.mock import patch # patch: Used to mock objects during testing
 
 
 def test_redirect_home(client):

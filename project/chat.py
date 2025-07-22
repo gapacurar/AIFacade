@@ -31,12 +31,30 @@ Dependencies:
 """
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+# Blueprint: For modular route organization
+# render_template: To render HTML templates
+# request: To access form data from POST requests
+# redirect, url_for: For redirecting users and generating URLs
+# flash: For displaying feedback messages to users
+
 from flask_login import current_user
+# current_user: To check authentication and get the current user's ID
+
 from .models import Chat  # Import after db is defined in models.py
+# Chat: The database model for storing chat messages
+
 from .utils import query_deepseek
+# query_deepseek: Utility function to get responses from the DeepSeek API
+
 from .db import db
+# db: SQLAlchemy database instance for database operations
+
 from pydantic import ValidationError
+# ValidationError: To handle validation errors from Pydantic schemas
+
 from .schemas import ChatPromptSchema
+# ChatPromptSchema: Pydantic schema for validating chat prompts
+
 
 bp = Blueprint('chat', __name__)
 

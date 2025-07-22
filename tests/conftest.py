@@ -32,11 +32,22 @@ Import these fixtures in your test modules to easily set up the app context, dat
 """
 
 from project.models import User
+# User: The User model, used for creating user instances in tests
+
 import tempfile
+# tempfile: Used to create a temporary file for the test database
+
 from project import create_app
+# create_app: Factory function to create a Flask app instance for testing
+
 import os
+# os: Used for file operations, such as removing the temporary database file
+
 from project.db import db
+# db: SQLAlchemy database instance for creating and dropping tables during tests
+
 import pytest
+# pytest: Testing framework used for fixtures and test discovery
 
 # Fixture to create and configure a new app instance for each test module
 @pytest.fixture(scope='module')

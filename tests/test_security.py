@@ -1,4 +1,4 @@
-from flask_login import current_user
+from flask_login import current_user # current_user: Flask-Login's proxy for the currently logged-in user
 
 def test_session_protection_on_user_agent_change(client):
     """

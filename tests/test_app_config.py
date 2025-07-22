@@ -1,5 +1,6 @@
-from project import create_app
-import pytest
+from project import create_app # create_app: Factory function to create a Flask app instance
+from project.db import db # db: SQLAlchemy database instance for ORM operations
+import pytest # pytest: Testing framework used for fixtures and test discovery
 
 @pytest.mark.last
 def test_app_loads_config_from_file():
