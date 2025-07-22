@@ -1,4 +1,14 @@
 """
+- Flask (from flask import Blueprint, render_template, request, flash, redirect, url_for)
+    # Used for creating blueprints, rendering templates, handling requests, flashing messages, and redirects.
+- Flask-Login (from flask_login import login_user, LoginManager, current_user, logout_user)
+    # Provides user session management for Flask, including login, logout, and user loading.
+- Pydantic (from pydantic import ValidationError)
+    # Used for validating and parsing user input data via schemas.
+- SQLAlchemy (from .db import db)
+    # Database ORM for managing user data and sessions.
+- Custom User model and schemas (from .models import User, from .schemas import UserRegisterSchema, UserLoginSchema)
+    # User model for database operations and Pydantic schemas for input validation.
 auth.py
 This module defines authentication routes and logic for user registration, login, and logout
 using Flask, Flask-Login, and Pydantic for input validation.
