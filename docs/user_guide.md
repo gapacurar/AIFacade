@@ -1,131 +1,125 @@
 # User Guide Document
+**IMPORTANT NOTE AFTER REVIEW** A user guide is something else than what is presented here. A user guide shows the user how to use a software product, how to use its visual elements, how to understand the messages sent by the web application in the interface, how to act when is not happening what it expects. The user does not install, configure, test, deploy, backup or restore the web application Think a user using the google email. You should deliver the information for the user not for the admins, testers, developers, etc. 
 
 ## Document Control
 
-- **Version:** 1.0
-- **Date:** 2025-07-17
-- **Authors:** Bicu Andrei Ovidiu
+- **Version:** 2.0
+- **Date:** 2025-07-22
+- **Authors:** Gheorghe-Aurel Pacurar
 - **Status:** Final
+
+# User Guide for AIFacade Web Application
+
+This guide is for users who access the AIFacade web application through a browser. It explains how to log in, use the main features, understand visual elements, and what results to expect.
+
+---
 
 ## Table of Contents
 
 1. Introduction
-2. Getting Started
-    - Prerequisites
-    - Installation
-3. Running the Application
-4. Accessing the App
-5. Testing
-6. Common Issues
-7. Backup & Restore
+2. Accessing the Application
+3. Logging In and Out
+4. Main Features and How to Use Them
+5. Visual Elements and What They Mean
+6. Expected Results and Feedback
+7. Troubleshooting and Getting Help
+8. Frequently Asked Questions (FAQ)
+
+---
 
 ## 1. Introduction
 
-This guide explains how to install, run, and use the Flask-based web application deployed with Docker and reverse-proxied via Caddy. The app supports automatic testing via GitHub Actions and is structured for production use with Gunicorn.
+Welcome to the AIFacade web application! This guide will help you use the app easily, even if you have no technical background.
 
-## 2.1 Prerequisites
+---
 
-Make sure you have the following installed:
+## 2. Accessing the Application
 
-- Docker
-- Docker Compose
-- Git
-- (Optional) Python 3.x for development outside containers
+- Open your web browser (such as Chrome, Edge, or Safari).
+- Go to the website address provided by your administrator (for example: [http://localhost](http://localhost) or a custom link).
+- If you see a security warning, click "Proceed" or "Accept the risk" to continue.
 
-## 2.2 Installation
+---
 
-Clone the repository
+## 3. Logging In and Out
 
-```sh
-git clone --branch final-exam https://github.com/your-username/AIFacade.git
-cd AIFacade
-```
+### Logging In
 
-If this moves to the main, then:
+1. On the home page, you will see a login form.
+2. Enter your username and password.
+3. Click the **Login** button.
+4. If your details are correct, you will be taken to your dashboard.
 
-```sh
-git clone https://github.com/your-username/AIFacade.git
-cd AIFacade
-```
+> **Tip:** If you do not have an account, look for a **Register** or **Sign Up** link and follow the instructions.
 
-Configure environment variables:
+### Logging Out
 
-Create a *.env* file IF *it doesn't exist already*:
+- Click the **Logout** button or link, usually found at the top right of the page.
 
-```env
-SECRET_KEY = supersecretkey
-DATABASE_URI = sqlite:///users.db
-DEEPSEEK_API_KEY = yourapikey
-```
+---
 
-The DEEPSEEK_API_KEY can be generated from <https://platform.deepseek.com/api_keys>
-Configure the database using CLI commands if there is no __instance/users.db__ in your root directory.
+## 4. Main Features and How to Use Them
 
-```sh
-flask --app project init-db
-```
+After logging in, you will see the main dashboard. Common features include:
 
-This will create the __instance__ directory and the database alongside the tables needed.
+- **Dashboard:** Overview of your account and recent activity.
+- **Submit a Request:** Fill out forms or upload files as needed.
+- **View Results:** See the outcomes of your requests or actions.
+- **Settings/Profile:** Update your personal information or preferences.
 
-## 3. Running the Application
+> **How to use:**  
+> Click on the menu items or buttons to navigate. Follow on-screen instructions for each feature.
 
-Run the application using Docker Compose:
+---
 
-```sh
-docker compose up --build
-```
+## 5. Visual Elements and What They Mean
 
-This builds the image and starts:
+- **Buttons:** Click to perform actions (e.g., Submit, Save, Logout).
+- **Forms:** Enter information in text boxes, select options, or upload files.
+- **Notifications:**  
+  - Green messages mean success (e.g., "Your request was submitted successfully").
+  - Red messages mean errors (e.g., "Incorrect password").
+  - Yellow or blue messages provide information or warnings.
 
-__web__: Flask app served via Gunicorn
-__caddy__: Reverse proxy
+- **Icons:**  
+  - A checkmark (✔️) usually means success.
+  - An exclamation mark (!) means warning or error.
 
-## 4. Accessing the Application
+- **Loading Spinner:** The app is working; please wait.
 
-After startup:
-    - Local access (HTTP): <http://localhost>
-    - HTTPS (self-signed): <https://localhost>
-Note: On first access, your browser will show a security warning. Accept the risk to continue.
+---
 
-## 5. Testing
+## 6. Expected Results and Feedback
 
-## Docker
+- After submitting a form or request, you should see a confirmation message.
+- If there is a problem, an error message will appear with instructions.
+- Your dashboard will update to show new results or information after actions.
 
-To run tests locally in the container:
+---
 
-```sh
-docker compose run --rm web pytest tests/ -v
-```
+## 7. Troubleshooting and Getting Help
 
-## Terminal
+- **Forgot Password:** Look for a "Forgot Password?" link on the login page.
+- **Page Not Loading:** Refresh the page or check your internet connection.
+- **Unexpected Errors:** Log out and log back in, or close and reopen your browser.
 
-To run tests locally outside docker:
+If you still have issues, contact your administrator or support team for help.
 
-```sh
-python -m pytest --cov=project tests/ -v
-```
+---
 
-To generate a html report:
+## 8. Frequently Asked Questions (FAQ)
 
-```sh
-python -m pytest --cov=project --cov-report=html tests/
-```
+**Q: I can't log in. What should I do?**  
+A: Make sure your username and password are correct. Use "Forgot Password?" if available.
 
-After that a folder called "htmlcov" should appear in your root directory. Also the output should give you an url on which you can click to open the report up.
+**Q: I see an error message. What does it mean?**  
+A: Read the message carefully; it usually tells you what went wrong and how to fix it.
 
-## 6. Common Issues
+**Q: How do I know my action worked?**  
+A: Look for a green success message or check your dashboard for updates.
 
-Port in use?
-```docker compose down```
+---
 
-Volume not persisting?
-Ensure **instance/** is mounted in **docker-compose.yml**
+> For any other questions, please contact your support team.
 
-## 7. Backup
 
-```powershell
-$date = Get-Date -Format "yyyy-MM-dd"
-Copy-Item -Path ".\instance\users.db" -Destination ".\backups\users_$date.db"
-```
-
-This will create a folder "backups" in your root directory which contains the backups you make.
